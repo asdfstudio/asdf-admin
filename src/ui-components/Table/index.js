@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./Table.module.css";
 
 const Table = ({
@@ -25,7 +26,7 @@ const Table = ({
                   {th.icon ? (
                     <th key={i}>
                       <span>{th.heading}</span>
-                      <span>
+                      <span style={{paddingLeft: "5px"}}>
                         <th.icon />
                       </span>
                     </th>
@@ -50,7 +51,16 @@ const Table = ({
                       </span>
                       <span>{td.value}</span>
                     </td>
-                  ) : (
+                  ) : td.image ? (
+                    <td>
+                      <Image 
+                        src={`/`+td.image}
+                        width={'70'}
+                        height={'60'}
+                    />
+                    </td>
+                  )
+                  : (
                     <td>{td.value}</td>
                   );
                 })}

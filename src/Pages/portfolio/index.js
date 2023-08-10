@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ActionButton from "@aio/components/ActionButton";
-import BillingHistory from "../../components/BillingHistory";
+import ProjectHistory from "../../components/ProjectHistory";
 import HeaderSection from "@aio/components/HeaderSection";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Modal from "@aio/components/Modal";
@@ -12,7 +12,6 @@ const Portfolio = () => {
     const [modal, setModal] = useState(false);
 
     const handleClose = () => {
-      //alert('closing');
       setModal(false);
     };
   
@@ -37,7 +36,7 @@ const Portfolio = () => {
                     />
                 )}
             />
-            <BillingHistory />
+            <ProjectHistory />
 
             <Modal
                 isOpen={modal}

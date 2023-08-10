@@ -16,7 +16,7 @@
 
 .table-wrapper{
     width: 100%;
-    overflow: scroll;
+    overflow:auto;
 }
 
 .table{
@@ -26,13 +26,26 @@
     text-align: left;
 }
 .table th{
-    font-size: 12px;
+    font-size: 14px;
+}
+.table th:last-child{
+    width: 100px;
+}
+.table th:first-child{
+    width: 150px;
+}
+.table th:nth-last-child(2){
+    width: 800px;
 }
 .table tr{
     border-top: 1px solid rgb(211, 211, 211);
 }
 .table td, .table th{
-    padding: 10px ;
+    padding: 10px;
+}
+.table td, .table th{
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .table tr td:nth-of-type(1){

@@ -11,7 +11,7 @@ import ActionButton from "@aio/components/ActionButton";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Section from "@aio/components/Section";
 
-import BillingHistory from "../../components/BillingHistory";
+import BillingHistory from "../../components/ProjectHistory";
 import Paragraph from "../../components/Paragraph";
 import BarChartExample from "../../components/BarChartExample";
 import Input from "@aio/components/Input";
