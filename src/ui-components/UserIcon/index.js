@@ -9,6 +9,7 @@ const UserIcon = ({
         <div onClick={onClick} className={styles.container}>
             <Image 
                 src={`/favicon.png`}
+                alt="favicon"
                 width={'40'}
                 height={'40'}
             />

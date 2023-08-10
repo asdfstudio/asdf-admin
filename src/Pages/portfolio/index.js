@@ -5,7 +5,6 @@ import HeaderSection from "@aio/components/HeaderSection";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Modal from "@aio/components/Modal";
 import Input from "@aio/components/Input";
-import { portfolioTags } from "src/data";
 
 
 const Portfolio = () => {
@@ -47,37 +46,37 @@ const Portfolio = () => {
                 onCancel={handleCancel}
                 onSubmit={handleSubmit}
             >
-                            <div>
-              <Input
-                inputContainerStyle={{ padding: "15px 30px" }}
-                type="text"
-                placeholder="Title"
-                onChange={(e) => console.log(e)}
-                name="title"
-                label={"Title of the portfolio"}
-              />
-              <Input
-                inputContainerStyle={{ padding: "15px 30px" }}
-                type="password"
-                placeholder="Description"
-                onChange={(e) => console.log(e)}
-                name="desc"
-                label={"Description"}
-              />
-
-                {/* {portfolioTags.map((tag, index) => (
-                  <Input
-                  inputContainerStyle={{ }}
-                  type="checkbox"
-                  placeholder=""
+              <div>
+                <Input
+                  inputContainerStyle={{ padding: "15px 30px" }}
+                  type="text"
+                  placeholder="Title"
                   onChange={(e) => console.log(e)}
-                  name="tag"
-                  label={tag.text}
+                  name="title"
+                  label={"Title of the portfolio"}
                 />
-                ))} */}
+                <Input
+                  inputContainerStyle={{ padding: "15px 30px" }}
+                  type="password"
+                  placeholder="Description"
+                  onChange={(e) => console.log(e)}
+                  name="desc"
+                  label={"Description"}
+                />
+
+                  {/* {portfolioTags.map((tag, index) => (
+                    <Input
+                    inputContainerStyle={{ }}
+                    type="checkbox"
+                    placeholder=""
+                    onChange={(e) => console.log(e)}
+                    name="tag"
+                    label={tag.text}
+                  />
+                  ))} */}
 
 
-            </div>
+              </div>
             </Modal>
         </>
     );

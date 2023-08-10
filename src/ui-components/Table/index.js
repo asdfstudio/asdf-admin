@@ -9,6 +9,7 @@ const Table = ({
   data,
 }) => {
   return (
+    
     <section className={styles["table-container"]}>
       <div className={styles["table-header"]}>
         <div>
@@ -38,9 +39,9 @@ const Table = ({
             </tr>
           </thead>
           <tbody>
-            {data.map((tr) => (
-              <tr key={tr.id}>
-                {heading.map((th) => {
+            {data.map((tr, i) => (
+              <tr key={i}>
+                {heading.map((th, i) => {
                   const td = tr[th.key];
                   return td.component ? (
                     <td>{td.component()}</td>
@@ -55,6 +56,7 @@ const Table = ({
                     <td>
                       <Image 
                         src={`/`+td.image}
+                        alt={td.image}
                         width={'70'}
                         height={'60'}
                     />
