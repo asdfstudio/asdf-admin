@@ -6,16 +6,19 @@
     background: rgba(0, 0, 0, 0.3);
     left: 0;
     top: 0;
-}
+    overflow: auto;
+
+    display: flex;
+    justify-content: center;}
 
 .modal-container{
     min-width: 600px;
+    height: auto;
     background: #fff;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 5px;
+    margin-top: 5%;
+    overflow: auto;
 }
 
 .close-btn{

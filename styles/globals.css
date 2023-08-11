@@ -64,7 +64,7 @@ ul li{
 }
 
 .content{
-  width: calc(100% - 300px);
+  width: calc(99% - 300px);
   position: relative;
   left: 300px;
 }
