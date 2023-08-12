@@ -1,29 +1,19 @@
+
 .container{
 
 }
 .login-container{
     width: 800px;
-    min-height: 400px;
+    height: auto;
     background: #fff;
-    margin: 100px auto;
+    margin: 10px auto;
     display: flex;
-}
-
-.brand-container{
-    width: 50%;
-    min-height: 100%;
-    background: #D3E9F7;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-
 }
 
 .form-container{
-    width: 50%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 0;
 }
 
 .logo-explain{
@@ -33,6 +23,11 @@
 
 .sm-brand-container{
     display: none;
+}
+
+.button-container{
+  float: right;
+  padding: 20px 30px;
 }
 
 @media screen and (max-width: 768px){

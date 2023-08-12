@@ -13,7 +13,7 @@ const Input = ({
             className={styles['input-container']}
             style={inputContainerStyle}
         >
-            <p>{label}</p>
+            <p className={styles['label-container']}>{label}</p>
             <input
                 className={styles['input-style']} 
                 type={type}

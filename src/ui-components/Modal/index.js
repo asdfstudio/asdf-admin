@@ -11,7 +11,7 @@ const Modal = ({
     negativeText = '',
     children,
     onSubmit = () => {},
-    onCancel = () => {} 
+    onDelete = () => {} 
 }) => {
   return (
     <>
@@ -31,8 +31,8 @@ const Modal = ({
             <div className={styles["modal-footer"]}>
                 <div>{negativeText}</div>
                 <div className={styles["footer-container"]}>
-                    <TextButton onClick={onCancel} fontWeight={'normal'} label="Cancel" />
-                    <div className="ml-5">
+                    <TextButton onClick={onDelete} fontWeight={'normal'} label="Delete" />
+                    <div className="ml-1">
                       <InlineButton onClick={onSubmit} label={positiveText} />
                     </div>
                 </div>

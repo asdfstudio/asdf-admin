@@ -77,6 +77,10 @@ ul li{
   font-weight: 500;
 }
 
+/* image uplaod Powered by PQINA */
+.filepond--credits {
+  display: none;
+}
 @media screen and (max-width: 360px) {
   .content{
     width: 100%;

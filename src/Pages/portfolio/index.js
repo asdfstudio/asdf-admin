@@ -6,6 +6,7 @@ import HeaderSection from "@aio/components/HeaderSection";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Modal from "@aio/components/Modal";
 import Input from "@aio/components/Input";
+import ImageUpload from '@aio/components/ImageUpload';
 
 
 const Portfolio = () => {
@@ -162,7 +163,19 @@ const Portfolio = () => {
                   />
                 </div>
 
+                <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
+                  <p>Select cover photo (Select One)</p>
+                  <ImageUpload
+                    maxImage="1"
+                  />
+                </div>
 
+                <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
+                  <p>Select Portfolio photos</p>
+                  <ImageUpload
+                    maxImage="10"
+                  />
+                </div>
               </div>
             </Modal>
         </>

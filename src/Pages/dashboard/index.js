@@ -38,47 +38,62 @@ export default function Dashboard() {
       <HeaderSection
         heading={"Dashboard"}
         subHeading={"Welcome to airlyStudio dashboard"}
-        rightItem={() => (
-          <ActionButton
-            onClick={() => setModal(true)}
-            Icon={AiOutlinePlusCircle}
-            label="Add New Portfolio"
-          />
-        )}
+        // rightItem={() => (
+        //   <ActionButton
+        //     onClick={() => setModal(true)}
+        //     Icon={AiOutlinePlusCircle}
+        //     label="Add New Portfolio"
+        //   />
+        // )}
       />
 
       <Section>
         <DataCard
-          label={"Total Customer"}
-          value={"45,09,333"}
+          label={"Total Visiter's"}
+          value={"45,09"}
           percentageValue={3.45}
           inverse={true}
         />
+        <DataCard
+          label={"Total Portfolio's"}
+          value={"45"}
+          percentageValue={3.45}
+          inverse={false}
+        />
+      </Section>
+
+      <Section>
+        <div style={{
+                display: "flex",
+                gap: "10px"
+              }}>
+          <Card
+            heading="Bar Chart Example"
+            subHeading="Lets see how data is ploting on chartjs"
+            topRight= "false"
+            footerRight= "false"
+          >
+            <BarChartExample />
+          </Card>
+          <Card
+            heading="Doughnut Chart Example"
+            subHeading="Lets see how data is ploting on chartjs"
+            topRight= "false"
+            footerRight= "false"
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <DoughnutChartExample />
+            </div>
+          </Card>
+        </div>
       </Section>
 
       {/* <Section>
-        <Card
-          heading="Bar Chart Example"
-          subHeading="Lets see how data is ploting on chartjs"
-        >
-          <BarChartExample />
-        </Card>
-        <Card
-          heading="Doughnut Chart Example"
-          subHeading="Lets see how data is ploting on chartjs"
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <DoughnutChartExample />
-          </div>
-        </Card>
-      </Section> */}
-
-      <Section>
         <Card
           heading="Basic Plan"
           subHeading="Our most popular plan for small teams."
@@ -126,7 +141,7 @@ export default function Dashboard() {
             <Paragraph />
           </div>
         </Card>
-      </Section>
+      </Section> */}
 
       {/* <BillingHistory /> */}
 

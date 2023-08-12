@@ -10,8 +10,9 @@ const Card = ({
     subHeading = '',
     rightItem = () => {},
     children,
+    topRight= "true",
     footerLeft = null,
-    footerRight = null,
+    footerRight = "true",
     width=null,
     data=[]
 }) => {
@@ -28,6 +29,12 @@ const Card = ({
     const handleCloseEditModal = () => {
         setEditModal(false);
       };
+    const handleDeletePortfolio = () => {
+        alert('Deleting is working..!');
+      };
+    const handleEditPortfolio = () => {
+        alert('Submit is working..!');
+      };
       
       const openEditModal = () => {
         setEditModal(true);
@@ -41,12 +48,15 @@ const Card = ({
                         <p className="s-12 tc-grey">{subHeading}</p>
                     </div>
                     <div className="card-right">
-                        <ActionButton
-                            inverse={true}
-                            label="View"
-                            style={{ padding: "4px 10px", fontSize: 14 }}
-                            onClick={openViewModal}
-                        />
+                        {
+                            topRight == "true" &&
+                            <ActionButton
+                                inverse={true}
+                                label="View"
+                                style={{ padding: "4px 10px", fontSize: 14 }}
+                                onClick={openViewModal}
+                            /> 
+                        }
                     </div>
                 </div>
                 <div className={styles["card-body"]}>
@@ -56,12 +66,15 @@ const Card = ({
                     <div className={styles["card-footer"]}>
                         {footerLeft && footerLeft()}
                         {/* {footerRight && footerRight()} */}
-                        <ActionButton
-                            inverse={true}
-                            label="Edit"
-                            style={{ padding: "4px 10px", fontSize: 14 }}
-                            onClick={openEditModal}
-                        />
+                        {
+                            footerRight == "true" && 
+                            <ActionButton
+                                inverse={true}
+                                label="Edit"
+                                style={{ padding: "4px 10px", fontSize: 14 }}
+                                onClick={openEditModal}
+                            />
+                        }
                     </div>
                 )}
             </div>
@@ -70,7 +83,9 @@ const Card = ({
                 isOpen={viewModal}
                 heading={heading}
                 onClose={handleCloseViewModal}
-                positiveText={'Download'}
+                onDelete={handleDeletePortfolio}
+                onSubmit={handleEditPortfolio}
+                positiveText={'Edit'}
                 // negativeText={'Cancel'}
             >
                 {data &&
@@ -79,7 +94,7 @@ const Card = ({
                         <p>{data?.desc}</p>
                         <div className={styles["tagContainer"]}>
                             {
-                                data.tags.map((tag, i) => (
+                                data.tags?.map((tag, i) => (
                                     <div className={styles["tagAllign"]} key={i}>
                                         <Tag
                                             label={tag.tag}
@@ -115,7 +130,7 @@ const Card = ({
                 isOpen={editModal}
                 heading={heading}
                 onClose={handleCloseEditModal}
-                positiveText={'Download'}
+                positiveText={'Edit '}
                 // negativeText={'Cancel'}
             >
                 {data &&

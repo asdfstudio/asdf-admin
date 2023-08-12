@@ -12,3 +12,7 @@
     background: #fff;
     display: inline-block;
 }
+
+.label-container{
+    font-weight: 800;
+}

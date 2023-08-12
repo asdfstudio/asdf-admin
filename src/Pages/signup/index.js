@@ -23,7 +23,7 @@ const Signup = () => {
               <p>Create a new Account</p>
             </div>
             <div>
-            <Input
+               <Input
                 inputContainerStyle={{ padding: "15px 30px" }}
                 type="text"
                 placeholder="Name"
