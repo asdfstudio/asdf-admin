@@ -1,9 +1,14 @@
 /* Float four columns side by side */
 .column {
-    float: left;
-    width: 50%;
+    /* float: left; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: auto;
     padding: 5px;
     padding-left: 20px;
+    align-items: center;
+    justify-content: center;
   }
   
   /* Remove extra left and right margins, due to padding */

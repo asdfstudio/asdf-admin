@@ -47,7 +47,7 @@ const Portfolio = () => {
 
     const table_data_api = [
       {
-        id: 1,
+        id: "1",
         coverImage: "cover01.png",
         project: "CheckCheck",
         projectDate: "Dec 1, 2022",
@@ -59,7 +59,7 @@ const Portfolio = () => {
         actionBtn: "View"
       },
       {
-        id: 2,
+        id: "2",
         coverImage: "cover02.png",
         project: "Hello Skincare",
         desc: "The Strategic Design Studio works with companies to design and implement strategic.",
@@ -73,7 +73,7 @@ const Portfolio = () => {
         actionBtn: "View"
       },
       {
-        id: 3,
+        id: "3",
         coverImage: "cover02.png",
         project: "Hello Skincare",
         desc: "The Strategic Design Studio works with companies to design and implement strategic.",
@@ -87,7 +87,7 @@ const Portfolio = () => {
         actionBtn: "View"
       },
       {
-        id: 4 ,
+        id: "4",
         coverImage: "cover02.png",
         project: "Hello Skincare",
         desc: "The Strategic Design Studio works with companies to design and implement strategic.",
