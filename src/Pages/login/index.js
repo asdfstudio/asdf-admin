@@ -3,8 +3,26 @@ import FullButton from "@aio/components/FullButton";
 import Input from "@aio/components/Input";
 import Logo from "@aio/components/Logo";
 import styles from "./login.module.css";
+import { useState } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import login from "pages/api/login";
 
 const Login = () => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const user = {
+      email, password
+  }
+
+    login(user);
+  };
+
   return (
       <div className={styles.container}>
         <section className={styles["login-container"]}>
@@ -22,12 +40,12 @@ const Login = () => {
               <h1>Login</h1>
               <p>Please enter email and password to login</p>
             </div>
-            <div>
+            <form onSubmit={handleSubmit}>
               <Input
                 inputContainerStyle={{ padding: "15px 30px" }}
                 type="text"
                 placeholder="Email"
-                onChange={(e) => console.log(e)}
+                onChange={(e) => setEmail(e.target.value)}
                 name="email"
                 label={"Email"}
               />
@@ -35,18 +53,19 @@ const Login = () => {
                 inputContainerStyle={{ padding: "15px 30px" }}
                 type="password"
                 placeholder="Password"
-                onChange={(e) => console.log(e)}
+                onChange={(e) => setPassword(e.target.value)}
                 name="email"
-                label={"Email"}
+                label={"Password"}
               />
 
               <FullButton label={"Login"} />
+              {/* <button type="submit" className={styles['btn-style']}>label</button> */}
 
               <p className="tc-grey t-center">
                 Dont have an account?{" "}
                 <Link className="link" href={`/signup`}>Signup for free</Link>
               </p>
-            </div>
+            </form>
           </div>
         </section>
       </div>

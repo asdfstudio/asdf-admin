@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "chart.js": "^4.2.1",
     "eslint": "^8.46.0",
     "eslint-config-next": "^13.4.13",
@@ -21,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-filepond": "^7.1.2",
     "react-icons": "^4.6.0",
+    "react-redux": "^8.1.2",
     "react-select": "^5.7.4"
   }
 }

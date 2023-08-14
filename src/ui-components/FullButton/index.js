@@ -6,9 +6,9 @@ const FullButton = ({
 }) => {
     return (
         <div className={styles['btn-container']}>
-            <Link href={'/dashboard'}>
-                <button className={styles['btn-style']}>{label}</button>
-            </Link>
+            {/* <Link href={'/dashboard'}> */}
+                <button type="submit" className={styles['btn-style']}>{label}</button>
+            {/* </Link> */}
         </div>
         
     );
