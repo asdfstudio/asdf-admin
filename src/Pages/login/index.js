@@ -4,14 +4,18 @@ import Input from "@aio/components/Input";
 import Logo from "@aio/components/Logo";
 import styles from "./login.module.css";
 import { useState } from "react";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import login from "pages/api/login";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "src/actions/auth.action";
+import { useRouter } from "next/router";
 
-const Login = () => {
+const Login = (props) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const auth = useSelector(state => state.auth);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,8 +24,19 @@ const Login = () => {
       email, password
   }
 
-    login(user);
+    // dispatch(login(user));
+
+    try {
+      await dispatch(login(user));
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
   };
+
+  // if(auth.authenticate){
+  //   return router.push('/dashboard');
+  // }
 
   return (
       <div className={styles.container}>

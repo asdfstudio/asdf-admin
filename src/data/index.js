@@ -11,7 +11,7 @@ export const menuList = [
   {
     text: "Logout",
     Icon: FiLogOut,
-    href: "login",
+    href: "/logout",
   },
 ];
 

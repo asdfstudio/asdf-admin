@@ -1,11 +1,12 @@
 import axios from "axios";
 
 export default async (req, res) => {
-    const { email, password, retypePassword } = req;
+    const { name, email, password, retypePassword } = req;
 
     try{
         const res = await 
         axios.post('http://localhost:5000/api/sign-up', {
+            name,
             email, 
             password, 
             retypePassword

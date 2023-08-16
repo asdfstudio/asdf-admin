@@ -4,7 +4,9 @@ import Input from "@aio/components/Input";
 import Logo from "@aio/components/Logo";
 import styles from "./signup.module.css";
 import { useState } from "react";
-import signup from "pages/api/signup";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "src/actions/auth.action";
+import { useRouter } from "next/router";
 
 const Signup = () => {
 
@@ -13,6 +15,10 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
 
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const auth = useSelector(state => state.auth);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,7 +26,14 @@ const Signup = () => {
       name, email, password, retypePassword
   }
 
-    signup(user);
+    // signup(user);
+
+    try {
+      await dispatch(signup(user));
+      router.push('/login');
+    } catch (error) {
+      console.error('Error during signup:', error);
+    }
   };
 
   return (

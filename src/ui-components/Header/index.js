@@ -9,6 +9,10 @@ import styles from "./Header.module.css";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import Link from "next/link";
 import { headerLoginMenuList, menuList } from "../../data";
+import { FiUser } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { logout } from "src/actions/auth.action";
+import { useRouter } from "next/router";
 
 /*
 
@@ -63,6 +67,19 @@ const NotificationList = ({ img = null, desc = "", datetime = "" }) => {
 };
 
 const Header = ({ toggleSidebarMenu }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  
+const submitLogout = async (e) => {
+  // dispatch(login(user));
+
+  try {
+    await dispatch(logout());
+    router.push('/login');
+  } catch (error) {
+    console.error('Error during login:', error);
+  }
+};
   return (
     <section className={styles.container}>
       <div className={styles["left-items"]}>
@@ -92,14 +109,18 @@ const Header = ({ toggleSidebarMenu }) => {
               }
             >
               <ul className={styles["dropdown-menu"]}>
-                {menuList.map((menu, index) => (
-                  <MenuList
-                    key={index}
-                    text={menu.text}
-                    Icon={menu.Icon}
-                    href={menu.href}
-                  />
-                ))}
+                <li>
+                  <Link href={'/profile'} className={styles["link"]}>
+                    {FiUser}
+                    <span>Profile</span>
+                  </Link>
+                </li>
+                <li>
+                  <div onClick={submitLogout} className={styles["link"]}>
+                    {FiUser}
+                    <span>Logout</span>
+                  </div>
+                </li>
               </ul>
             </DropdownMenu>
           </li>
