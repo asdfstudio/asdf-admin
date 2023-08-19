@@ -1,8 +1,11 @@
 import Layout from "../src/ui-components/layout";
 import Dashboard from "../src/Pages/dashboard";
+import PrivateContent from "src/components/PrivateContent";
 
 export default () => (
-    <Layout>
-        <Dashboard />
-    </Layout>
+    <PrivateContent>
+        <Layout>
+            <Dashboard />
+        </Layout>
+    </PrivateContent>
 )

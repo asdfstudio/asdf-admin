@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "src/actions/auth.action";
 import { useRouter } from "next/router";
+import { redirect } from 'next/navigation'
 
 const Login = (props) => {
 
@@ -33,10 +34,6 @@ const Login = (props) => {
       console.error('Error during login:', error);
     }
   };
-
-  // if(auth.authenticate){
-  //   return router.push('/dashboard');
-  // }
 
   return (
       <div className={styles.container}>

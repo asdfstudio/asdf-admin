@@ -30,9 +30,9 @@ const Signup = () => {
 
     try {
       await dispatch(signup(user));
-      router.push('/login');
+        router.push('/login');
     } catch (error) {
-      console.error('Error during signup:', error);
+        console.error('Error during signup:', error);
     }
   };
 
