@@ -8,7 +8,7 @@ function PrivateContent({ children }) {
     return <Login />;
   }
 
-  return(console.log('authhhhhh', auth.authenticate), children);
+  return(children);
 }
 
 export default PrivateContent;
