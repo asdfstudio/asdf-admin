@@ -26,7 +26,7 @@ const projectHistory = ({
   return (
     <div className={styles["row"]}>
 
-<DragDropContext onDragEnd={handleDrop}>
+      <DragDropContext onDragEnd={handleDrop}>
         <Droppable droppableId="list-container">
           {(provided) => (
             <div
@@ -35,7 +35,7 @@ const projectHistory = ({
               ref={provided.innerRef}
             >
 
-<div className={styles["column"]}>
+      <div className={styles["column"]}>
       { itemList.map((data, i) => (
         <Draggable key={data.id} draggableId={data.id} index={i}>
         {(provided) => (
@@ -48,13 +48,13 @@ const projectHistory = ({
           {...provided.draggableProps}
         >
           <Card
-            heading={data.project}
+            heading={data.name}
             data={data}
             footerLeft={() => {
               return (
                 <div className={styles["date-placeholder"]}>
                   <SlCalender />
-                  <p className="ml-5">{data.projectDate}</p>
+                  <p className="ml-5">{data.createdAt}</p>
                 </div>
               );
             }}
@@ -63,7 +63,7 @@ const projectHistory = ({
               <p>{data.desc}</p>
               <div className={styles["tagContainer"]}>
               {
-                  data.tags.map((tag, i) => (
+                  data.portfolio_tags.map((tag, i) => (
                     <div className={styles["tagAllign"]} key={i}>
                       <Tag
                         label={tag.tag}

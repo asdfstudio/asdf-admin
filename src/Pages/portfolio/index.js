@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import ActionButton from "@aio/components/ActionButton";
 import ProjectHistory from "../../components/ProjectHistory";
@@ -10,6 +11,7 @@ import ImageUpload from '@aio/components/ImageUpload';
 
 
 const Portfolio = () => {
+    const portfolios = useSelector(state => state.portfolio);
     const [modal, setModal] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
 
@@ -26,33 +28,15 @@ const Portfolio = () => {
       handleClose();
     }
 
-    const tags = [
-      {
-        id: 1,
-        tag: 'Website'
-      },
-      {
-        id: 2,
-        tag: 'Website Application'
-      },
-      {
-        id: 3,
-        tag: 'Application'
-      },
-      {
-        id: 4,
-        tag: 'Website'
-      },
-    ];
 
     const table_data_api = [
       {
         id: "1",
         coverImage: "cover01.png",
-        project: "CheckCheck",
-        projectDate: "Dec 1, 2022",
+        name: "CheckCheck",
+        createdAt: "Dec 1, 2022",
         desc:"The Strategic Design Studio works with companies to design and implement strategic.",
-        tags: [
+        portfolio_tags: [
           { id: 1, tag: 'Website' },
           { id: 2, tag: 'Website Application' },
         ],
@@ -61,10 +45,10 @@ const Portfolio = () => {
       {
         id: "2",
         coverImage: "cover02.png",
-        project: "Hello Skincare",
+        name: "Hello Skincare",
         desc: "The Strategic Design Studio works with companies to design and implement strategic.",
-        projectDate: "Nov 10, 2022",
-        tags: [
+        createdAt: "Nov 10, 2022",
+        portfolio_tags: [
           { id: 1, tag: 'Website' },
           { id: 2, tag: 'Website Application' },
           { id: 3, tag: 'Application' },
@@ -75,10 +59,10 @@ const Portfolio = () => {
       {
         id: "3",
         coverImage: "cover02.png",
-        project: "Hello Skincare",
+        name: "Hello Skincare",
         desc: "The Strategic Design Studio works with companies to design and implement strategic.",
-        projectDate: "Nov 10, 2022",
-        tags: [
+        createdAt: "Nov 10, 2022",
+        portfolio_tags: [
           { id: 1, tag: 'Website' },
           { id: 2, tag: 'Website Application' },
           { id: 3, tag: 'Application' },
@@ -89,10 +73,10 @@ const Portfolio = () => {
       {
         id: "4",
         coverImage: "cover02.png",
-        project: "Hello Skincare",
+        name: "Hello Skincare",
         desc: "The Strategic Design Studio works with companies to design and implement strategic.",
-        projectDate: "Nov 10, 2022",
-        tags: [
+        createdAt: "Nov 10, 2022",
+        portfolio_tags: [
           { id: 1, tag: 'Website' },
           { id: 2, tag: 'Website Application' },
           { id: 3, tag: 'Application' },
@@ -122,7 +106,8 @@ const Portfolio = () => {
                 )}
             />
             <ProjectHistory
-              data={table_data_api} 
+              // data={table_data_api} 
+              data={portfolios.portfolios} 
             />
 
             <Modal

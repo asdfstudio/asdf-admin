@@ -1,14 +1,15 @@
-import axios from "axios";
+// import axios from "axios";
 import { authConstants } from "./constants";
+import axios from "../helpers/axios";
+
+const baseURL = "http://localhost:5000/api";
 
 export const login = (user) => {
-
-    console.log("Login user:", user)
 
     return async (dispatch) => {
 
         dispatch({ type: authConstants.LOGIN_REQUEST });
-        const res = await axios.post(`http://localhost:5000/api/login`, {
+        const res = await axios.post(`${baseURL}/login`, {
             ...user
         });
 
@@ -40,7 +41,7 @@ export const signup = (user) => {
     return async (dispatch) => {
 
         dispatch({ type: authConstants.SIGNUP_REQUEST });
-        const res = await axios.post(`http://localhost:5000/api/signup`, {
+        const res = await axios.post(`${baseURL}/signup`, {
             ...user
         });
 
@@ -84,7 +85,7 @@ export const isUserLoggedIn = () => {
 export const logout = () => {
     return async dispatch => {
         dispatch({ type: authConstants.LOGOUT_REQUEST });
-        const res = await axios.post(`http://localhost:5000/api/logout`);
+        const res = await axios.post(`${baseURL}/logout`);
 
         if(res.status === 200){
             localStorage.clear();
@@ -96,7 +97,5 @@ export const logout = () => {
                 payload: { error: res.data.error }
             });
         }
-
-        
     }
 }

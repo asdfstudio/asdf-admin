@@ -15,8 +15,11 @@ import BillingHistory from "../../components/ProjectHistory";
 import Paragraph from "../../components/Paragraph";
 import BarChartExample from "../../components/BarChartExample";
 import Input from "@aio/components/Input";
+import { useSelector } from "react-redux";
 
 export default function Dashboard() {
+  const auth = useSelector(state => state.auth);
+  const portfolios = useSelector(state => state.portfolio);
   const [modal, setModal] = useState(false);
 
   const handleClose = () => {
@@ -32,12 +35,13 @@ export default function Dashboard() {
     alert('Submit is working..!');
     handleClose();
   }
-
+  const role = auth.user.role;
+  const upperRole = role.toUpperCase();
   return (
     <>
       <HeaderSection
-        heading={"Dashboard"}
-        subHeading={"Welcome to airlyStudio dashboard"}
+        heading={`${upperRole}, Dashboard`}
+        subHeading={`Welcome to airlyStudio, ${auth.user.name}`}
         // rightItem={() => (
         //   <ActionButton
         //     onClick={() => setModal(true)}
