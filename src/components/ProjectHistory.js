@@ -7,6 +7,9 @@ import Image from "next/image";
 import Tag from "@aio/components/Tag";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import FormattedDate from "./FormattedDate";
+
+const baseImageURL = "http://localhost:5000/api/portfolio/images/";
 
 const projectHistory = ({
   data=[]
@@ -54,7 +57,9 @@ const projectHistory = ({
               return (
                 <div className={styles["date-placeholder"]}>
                   <SlCalender />
-                  <p className="ml-5">{data.createdAt}</p>
+                  <p className="ml-5">
+                    <FormattedDate mysqlDateTimeString={data?.createdAt} />
+                  </p>
                 </div>
               );
             }}
@@ -75,12 +80,18 @@ const projectHistory = ({
               </div>
               <div className={styles["imageContainer"]}>
                 <Image 
-                  src={`/`+data.coverImage}
+                  // src={`/`+data.coverImage}
+                  src={`${baseImageURL}${data.coverImage}`}
                   alt={data.coverImage}
-                  width={"0"}
-                  height={"0"}
+                  width={400}
+                  height={250}
                   sizes="100vw"
-                  style={{ width: '100%', height: 'auto' }}
+                  // fill={true}
+                  style={{ borderRadius: 10}}
+
+                  // layout="fill"
+                  objectFit="contain"
+                  objectPosition="center"
                 />
               </div>
             </div>

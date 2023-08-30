@@ -16,11 +16,9 @@ export default function Home() {
 
     useEffect(() => {
         if (!auth.authenticate) {
-          // console.log("ksdfuwgfigfefiwehf9eyf98ewyf9we")
           dispatch(isUserLoggedIn());
         }
         if (auth.authenticate) {
-          console.log("ksdfuwgfigfefiwehf9eyf98ewyf9we56666666666666666666666")
           dispatch(getPortfolios());
         }
       }, [auth.authenticate]);

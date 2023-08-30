@@ -8,12 +8,22 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import Modal from "@aio/components/Modal";
 import Input from "@aio/components/Input";
 import ImageUpload from '@aio/components/ImageUpload';
+import { tags } from 'src/components/tags';
+import { useDispatch } from 'react-redux';
+import { addPortfolio, addPortfolioTags } from 'src/actions';
 
 
 const Portfolio = () => {
+    const dispatch = useDispatch();
     const portfolios = useSelector(state => state.portfolio);
     const [modal, setModal] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
+
+    const [title, setTitle] = useState("");
+    const [desc, setDesc] = useState("");
+    const [coverImage, setCoverImage] = useState([]);
+    const [portfolio_tags, setPortfolio_tags] = useState("");
+    const [portfolio_images, setPortfolio_images] = useState([]);
 
     const handleClose = () => {
       setModal(false);
@@ -22,75 +32,36 @@ const Portfolio = () => {
     const handleCancel = () => {
       setModal(false);
     }
-  
+
+    const handleFileUpload = (uploadedFiles) => {
+      setCoverImage(uploadedFiles[0].file);
+    };
+
+    const handleFilesUpload = (uploadedFiles) => {
+      uploadedFiles.forEach((files) => {
+        if (!portfolio_images.includes(files.file)) {
+          portfolio_images.push(files.file);
+        }
+      });
+    };
+
+    const handleSelectChange = (selectedOption) => {
+      setPortfolio_tags(selectedOption);
+    };
+
     const handleSubmit = () => {
-      alert('Submit is working..!');
-      handleClose();
-    }
+      const form = new FormData();
+      form.append("name", title);
+      form.append("desc", desc);
+      form.append('coverImage', coverImage);
 
-
-    const table_data_api = [
-      {
-        id: "1",
-        coverImage: "cover01.png",
-        name: "CheckCheck",
-        createdAt: "Dec 1, 2022",
-        desc:"The Strategic Design Studio works with companies to design and implement strategic.",
-        portfolio_tags: [
-          { id: 1, tag: 'Website' },
-          { id: 2, tag: 'Website Application' },
-        ],
-        actionBtn: "View"
-      },
-      {
-        id: "2",
-        coverImage: "cover02.png",
-        name: "Hello Skincare",
-        desc: "The Strategic Design Studio works with companies to design and implement strategic.",
-        createdAt: "Nov 10, 2022",
-        portfolio_tags: [
-          { id: 1, tag: 'Website' },
-          { id: 2, tag: 'Website Application' },
-          { id: 3, tag: 'Application' },
-          { id: 4, tag: 'Website' },
-        ],
-        actionBtn: "View"
-      },
-      {
-        id: "3",
-        coverImage: "cover02.png",
-        name: "Hello Skincare",
-        desc: "The Strategic Design Studio works with companies to design and implement strategic.",
-        createdAt: "Nov 10, 2022",
-        portfolio_tags: [
-          { id: 1, tag: 'Website' },
-          { id: 2, tag: 'Website Application' },
-          { id: 3, tag: 'Application' },
-          { id: 4, tag: 'Website' },
-        ],
-        actionBtn: "View"
-      },
-      {
-        id: "4",
-        coverImage: "cover02.png",
-        name: "Hello Skincare",
-        desc: "The Strategic Design Studio works with companies to design and implement strategic.",
-        createdAt: "Nov 10, 2022",
-        portfolio_tags: [
-          { id: 1, tag: 'Website' },
-          { id: 2, tag: 'Website Application' },
-          { id: 3, tag: 'Application' },
-          { id: 4, tag: 'Website' },
-        ],
-        actionBtn: "View"
-      },
-    ];
-    
-    const options = [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' },
-    ];    
+      const imagestag = {
+        tags: portfolio_tags.map(tag => (tag.label ))
+      };
+      
+      dispatch(addPortfolio(form, portfolio_images, imagestag.tags));
+      // dispatch(addPortfolio(form)).then(() => handleClose());
+    };
     
     return (
         <>
@@ -98,11 +69,11 @@ const Portfolio = () => {
                 heading={"Portolio"}
                 subHeading={"App new portfolio"}
                 rightItem={() => (
-                    <ActionButton
-                        onClick={() => setModal(true)}
-                        Icon={AiOutlinePlusCircle}
-                        label="Portfilio"
-                    />
+                  <ActionButton
+                      onClick={() => setModal(true)}
+                      Icon={AiOutlinePlusCircle}
+                      label="Portfilio"
+                  />
                 )}
             />
             <ProjectHistory
@@ -115,24 +86,22 @@ const Portfolio = () => {
                 onClose={handleClose}
                 heading={"Create New Portfolio"}
                 positiveText={"Save Changes"}
-                // negativeText={"Cancel"}
-                onCancel={handleCancel}
                 onSubmit={handleSubmit}
             >
-              <div>
+              <form onSubmit={handleSubmit}>
                 <Input
                   inputContainerStyle={{ padding: "15px 30px" }}
                   type="text"
                   placeholder="Title"
-                  onChange={(e) => console.log(e)}
+                  onChange={(e) => setTitle(e.target.value)}
                   name="title"
                   label={"Title of the portfolio"}
                 />
                 <Input
                   inputContainerStyle={{ padding: "15px 30px" }}
-                  type="password"
+                  type="text"
                   placeholder="Description"
-                  onChange={(e) => console.log(e)}
+                  onChange={(e) => setDesc(e.target.value)}
                   name="desc"
                   label={"Description"}
                 />
@@ -141,10 +110,12 @@ const Portfolio = () => {
                   <Select
                     defaultValue={selectedOption}
                     isMulti
-                    name="colors"
-                    options={options}
+                    name="tags"
+                    // options={options}
+                    options={tags}
                     className="basic-multi-select"
                     classNamePrefix="select"
+                    onChange={handleSelectChange}
                   />
                 </div>
 
@@ -152,16 +123,19 @@ const Portfolio = () => {
                   <p>Select cover photo (Select One)</p>
                   <ImageUpload
                     maxImage="1"
+                    onUpload={handleFileUpload}
                   />
+                  {/* <input type="file" accept="image/*" onChange={(e) => setCoverImage(e.target.files[0])} /> */}
                 </div>
 
                 <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
                   <p>Select Portfolio photos</p>
                   <ImageUpload
-                    maxImage="10"
+                    maxImage="100"
+                    onUpload={handleFilesUpload}
                   />
                 </div>
-              </div>
+              </form>
             </Modal>
         </>
     );

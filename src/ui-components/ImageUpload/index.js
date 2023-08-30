@@ -12,17 +12,21 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)  
 
 const ImageUpload = ({
-    maxImage = ""
+    maxImage = "",
+    onUpload 
 }) => {
-    const [files, setFiles] = useState([])
+    const handleUpdateFiles = (files) => {
+        onUpload(files);
+    };
     return (
         <div>
             <FilePond
-                files={files}
-                onupdatefiles={setFiles}
+                // files={files}
+                // onupdatefiles={setFiles}
                 allowReorder={true}
                 allowMultiple={true}
                 maxFiles={maxImage}
+                onupdatefiles={handleUpdateFiles}
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
             />
         </div>

@@ -9,6 +9,7 @@ const Modal = ({
     heading = '',
     positiveText = '',
     negativeText = '',
+    negativeText2 = '',
     children,
     onSubmit = () => {},
     onDelete = () => {} 
@@ -31,7 +32,10 @@ const Modal = ({
             <div className={styles["modal-footer"]}>
                 <div>{negativeText}</div>
                 <div className={styles["footer-container"]}>
-                    <TextButton onClick={onDelete} fontWeight={'normal'} label="Delete" />
+                  {
+                    negativeText2 == '' ? null :  
+                    <TextButton onClick={onDelete} fontWeight={'normal'} label={negativeText2} />
+                  }
                     <div className="ml-1">
                       <InlineButton onClick={onSubmit} label={positiveText} />
                     </div>

@@ -26,14 +26,16 @@ export const getPortfolios = () => {
 };
 
 // modified actrion
-export const addProduct = (form) => {
+export const addPortfolio = (form, portfolio_images, portfolio_tags) => {
   return async (dispatch) => {
     try {
       dispatch({ type: productConstants.ADD_PORTFOLIO_REQUEST });
-      const res = await axios.post(`product/create`, form);
+      const res = await axios.post(`${baseURL}portfolio/create`, form);
+      const portfolioId = res.data.portfolioId;
       if (res.status === 201) {
         dispatch({ type: productConstants.ADD_PORTFOLIO_SUCCESS });
-        dispatch(getPortfolios());
+        dispatch(addPortfolioImages(portfolioId, portfolio_images));
+        dispatch(addPortfolioTags(portfolioId, portfolio_tags));
       } else {
         dispatch({ type: productConstants.ADD_PORTFOLIO_FAILURE });
       }
@@ -43,15 +45,62 @@ export const addProduct = (form) => {
   };
 };
 
-// new action
-export const deleteProductById = (payload) => {
+export const addPortfolioImages = (portfolioId, portfolio_images) => {
   return async (dispatch) => {
     try {
-      const res = await axios.delete(`product/deleteProductById`, {
+      dispatch({ type: productConstants.ADD_PORTFOLIO_IMAGES_REQUEST });
+
+      const imagesform = new FormData();
+      imagesform.append("portfolioId", portfolioId);
+      portfolio_images.forEach((file) => {
+        imagesform.append('images', file);
+      });
+
+      const res = await axios.post(`${baseURL}portfolio/create/portfolioImages`, imagesform);
+      if (res.status === 201) {
+        dispatch({ type: productConstants.ADD_PORTFOLIO_IMAGES_SUCCESS });
+        dispatch(getPortfolios());
+      } else {
+        dispatch({ type: productConstants.ADD_PORTFOLIO_IMAGES_FAILURE });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const addPortfolioTags = (portfolioId, portfolio_tags) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: productConstants.ADD_PORTFOLIO_TAGS_REQUEST });
+
+      const imagestag = {
+        portfolioId: portfolioId,
+        tags: portfolio_tags.map(tag => ({ tag }))
+      };
+
+      const res = await axios.post(`${baseURL}portfolio/create/portfolioTags`, imagestag);
+      if (res.status === 201) {
+        dispatch({ type: productConstants.ADD_PORTFOLIO_TAGS_SUCCESS });
+        dispatch(getPortfolios());
+      } else {
+        dispatch({ type: productConstants.ADD_PORTFOLIO_TAGS_FAILURE });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+// new action
+export const deletePortfolioById = (payload) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.delete(`${baseURL}portfolio/deletePortfolioById`, {
         data: { payload },
       });
       dispatch({ type: productConstants.DELETE_PORTFOLIO_BY_ID_REQUEST });
-      if (res.status === 202) {
+      if (res.status === 200) {
         dispatch({ type: productConstants.DELETE_PORTFOLIO_BY_ID_SUCCESS });
         dispatch(getPortfolios());
       } else {

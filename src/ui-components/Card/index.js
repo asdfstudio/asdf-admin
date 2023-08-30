@@ -4,6 +4,11 @@ import Modal from "../Modal";
 import ActionButton from "../ActionButton";
 import Image from "next/image";
 import Tag from "../Tag";
+import FormattedDate from "src/components/FormattedDate";
+import { deletePortfolioById } from "src/actions";
+import { useDispatch } from "react-redux";
+
+const baseImageURL = "http://localhost:5000/api/portfolio/images/";
 
 const Card = ({
     heading = '',
@@ -16,6 +21,7 @@ const Card = ({
     width=null,
     data=[]
 }) => {
+    const dispatch = useDispatch();
     const [viewModal, setViewModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const handleCloseViewModal = () => {
@@ -30,7 +36,11 @@ const Card = ({
         setEditModal(false);
       };
     const handleDeletePortfolio = () => {
-        alert('Deleting is working..!');
+        const payload = {
+            portfolioId: data.id,
+        };
+        dispatch(deletePortfolioById(payload)).then(() => handleCloseViewModal());
+        // dispatch(addPortfolio(form)).then(() => handleClose());
       };
     const handleEditPortfolio = () => {
         alert('Submit is working..!');
@@ -87,14 +97,15 @@ const Card = ({
                 onSubmit={handleEditPortfolio}
                 positiveText={'Edit'}
                 // negativeText={'Cancel'}
+                negativeText2={'Delete'}
             >
                 {data &&
-                    <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"20px" }}>
-                        <p>{data?.projectDate}</p>
+                    <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"0px" }}>
+                        <FormattedDate mysqlDateTimeString={data?.createdAt} />
                         <p>{data?.desc}</p>
                         <div className={styles["tagContainer"]}>
                             {
-                                data.tags?.map((tag, i) => (
+                                data.portfolio_tags?.map((tag, i) => (
                                     <div className={styles["tagAllign"]} key={i}>
                                         <Tag
                                             label={tag.tag}
@@ -104,24 +115,25 @@ const Card = ({
                                 ))
                             }
                         </div>
-                        <Image 
-                            src={`/`+data?.coverImage}
-                            alt={data?.coverImage}
-                            width={'580'}
-                            height={'360'}
-                        />
-                        <Image 
-                            src={`/`+data?.coverImage}
-                            alt={data?.coverImage}
-                            width={'580'}
-                            height={'360'}
-                        />
-                        <Image 
-                            src={`/`+data?.coverImage}
-                            alt={data?.coverImage}
-                            width={'580'}
-                            height={'360'}
-                        />
+                        {
+                            data.portfolio_pictures?.length == 0 ? <p>No images here... </p> 
+                            : data.portfolio_pictures?.map((data, i) => (
+                                <Image 
+                                // src={`/`+data.coverImage}
+                                src={`${baseImageURL}${data.image}`}
+                                alt={data.coverImage}
+                                width={0}
+                                height={0}
+                                sizes="80vw"
+                                // fill={true}
+                                style={{ width: '100%', height: 'auto' }}
+
+                                // layout="fill"
+                                objectFit="contain"
+                                objectPosition="center"
+                            />
+                        ))
+                    }
                     </div>
                 }
             </Modal>
