@@ -59,7 +59,8 @@ const Login = (props) => {
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
                 name="email"
-                label={"Email"}
+                label={"Email or User name"}
+                value={email}
               />
               <Input
                 inputContainerStyle={{ padding: "15px 30px" }}
@@ -68,6 +69,7 @@ const Login = (props) => {
                 onChange={(e) => setPassword(e.target.value)}
                 name="email"
                 label={"Password"}
+                value={password}
               />
 
               <FullButton label={"Login"} />

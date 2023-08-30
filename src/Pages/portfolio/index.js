@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import ActionButton from "@aio/components/ActionButton";
@@ -10,7 +10,7 @@ import Input from "@aio/components/Input";
 import ImageUpload from '@aio/components/ImageUpload';
 import { tags } from 'src/components/tags';
 import { useDispatch } from 'react-redux';
-import { addPortfolio, addPortfolioTags } from 'src/actions';
+import { addPortfolio, addPortfolioTags, getPortfolios } from 'src/actions';
 
 
 const Portfolio = () => {
@@ -23,7 +23,12 @@ const Portfolio = () => {
     const [desc, setDesc] = useState("");
     const [coverImage, setCoverImage] = useState([]);
     const [portfolio_tags, setPortfolio_tags] = useState("");
-    const [portfolio_images, setPortfolio_images] = useState([]);
+    const [portfolio_images] = useState([]);
+
+    useEffect(() => {
+      getPortfolios();
+      console.log("Relaoad")
+    }, [portfolios]);
 
     const handleClose = () => {
       setModal(false);
@@ -48,8 +53,10 @@ const Portfolio = () => {
     const handleSelectChange = (selectedOption) => {
       setPortfolio_tags(selectedOption);
     };
+    
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+      e.preventDefault();
       const form = new FormData();
       form.append("name", title);
       form.append("desc", desc);
@@ -59,8 +66,7 @@ const Portfolio = () => {
         tags: portfolio_tags.map(tag => (tag.label ))
       };
       
-      dispatch(addPortfolio(form, portfolio_images, imagestag.tags));
-      // dispatch(addPortfolio(form)).then(() => handleClose());
+      dispatch(addPortfolio(form, portfolio_images, imagestag.tags)).then(() => handleClose());
     };
     
     return (
@@ -96,6 +102,7 @@ const Portfolio = () => {
                   onChange={(e) => setTitle(e.target.value)}
                   name="title"
                   label={"Title of the portfolio"}
+                  value={title}
                 />
                 <Input
                   inputContainerStyle={{ padding: "15px 30px" }}
@@ -104,6 +111,7 @@ const Portfolio = () => {
                   onChange={(e) => setDesc(e.target.value)}
                   name="desc"
                   label={"Description"}
+                  value={desc}
                 />
                 <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
                   <p>Tags</p>

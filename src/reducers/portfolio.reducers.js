@@ -12,6 +12,12 @@ export default (state = initialState, action) => {
                 portfolios: action.payload.portfolios
             }
             break;
+        case productConstants.DELETE_PORTFOLIO_BY_ID_SUCCESS:
+            state = {
+                ...state,
+                portfolios: state.portfolios.filter(portfolio => portfolio.id !== action.payload.portfolioId)
+            }
+            break;
     }
 
     return state;

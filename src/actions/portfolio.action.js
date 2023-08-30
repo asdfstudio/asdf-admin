@@ -93,15 +93,18 @@ export const addPortfolioTags = (portfolioId, portfolio_tags) => {
 };
 
 // new action
-export const deletePortfolioById = (payload) => {
+export const deletePortfolioById = (portfolioId) => {
   return async (dispatch) => {
     try {
       const res = await axios.delete(`${baseURL}portfolio/deletePortfolioById`, {
-        data: { payload },
+        data: { portfolioId },
       });
       dispatch({ type: productConstants.DELETE_PORTFOLIO_BY_ID_REQUEST });
       if (res.status === 200) {
-        dispatch({ type: productConstants.DELETE_PORTFOLIO_BY_ID_SUCCESS });
+        dispatch({ 
+          type: productConstants.DELETE_PORTFOLIO_BY_ID_SUCCESS,
+          payload: { portfolioId },
+        });
         dispatch(getPortfolios());
       } else {
         const { error } = res.data;

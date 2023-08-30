@@ -7,6 +7,7 @@ import Tag from "../Tag";
 import FormattedDate from "src/components/FormattedDate";
 import { deletePortfolioById } from "src/actions";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 const baseImageURL = "http://localhost:5000/api/portfolio/images/";
 
@@ -22,6 +23,7 @@ const Card = ({
     data=[]
 }) => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const [viewModal, setViewModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const handleCloseViewModal = () => {
@@ -35,11 +37,12 @@ const Card = ({
     const handleCloseEditModal = () => {
         setEditModal(false);
       };
-    const handleDeletePortfolio = () => {
+    const handleDeletePortfolio = async () => {
         const payload = {
             portfolioId: data.id,
         };
-        dispatch(deletePortfolioById(payload)).then(() => handleCloseViewModal());
+        await dispatch(deletePortfolioById(payload)).then(() => handleCloseViewModal());
+        // router.reload();
         // dispatch(addPortfolio(form)).then(() => handleClose());
       };
     const handleEditPortfolio = () => {

@@ -61,6 +61,7 @@ const Signup = () => {
                 onChange={(e) => setName(e.target.value)}
                 name="name"
                 label={"Name"}
+                value={name}
               />
               <Input
                 inputContainerStyle={{ padding: "15px 30px" }}
@@ -69,6 +70,7 @@ const Signup = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 name="email"
                 label={"Email"}
+                value={email}
               />
               <Input
                 inputContainerStyle={{ padding: "15px 30px" }}
@@ -77,6 +79,7 @@ const Signup = () => {
                 onChange={(e) => setPassword  (e.target.value)}
                 name="password"
                 label={"Password"}
+                value={password}
               />
               <Input
                 inputContainerStyle={{ padding: "15px 30px" }}
@@ -85,6 +88,7 @@ const Signup = () => {
                 onChange={(e) => setRetypePassword(e.target.value)}
                 name="retypePassword"
                 label={"Re-type Password"}
+                value={retypePassword}
               />
               <FullButton label={"Login"} />
 

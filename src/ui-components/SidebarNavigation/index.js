@@ -11,8 +11,6 @@ const SidebarNavigation = ({
   toggleSidebarMenu
 }) => {
   const router = useRouter();
-
-  console.log({ router });
   
   return (
     <section className={`${styles.container} ${sidebarMenuActive ? styles['active'] : ''}`}>

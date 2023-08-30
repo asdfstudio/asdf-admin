@@ -34,6 +34,60 @@ export const login = (user) => {
     }
 }
 
+export const updateUser = (user) => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: authConstants.UPDATE_REQUEST });
+        const res = await axios.post(`${baseURL}/updateUser`, {
+            ...user
+        });
+
+        if(res.status === 200){
+            const { user } = res.data;
+            localStorage.setItem('user', JSON.stringify(user));
+            dispatch({
+                type: authConstants.UPDATE_SUCCESS,
+                payload: {user}
+            });
+        }else{
+            if(res.status === 400){
+                dispatch({
+                    type: authConstants.UPDATE_FAILURE,
+                    payload: { error: res.data.error }
+                });
+            }
+        }
+    }
+}
+
+export const updatePassword = (password) => {
+
+    return async (dispatch) => {
+
+        dispatch({ type: authConstants.UPDATE_PASSWORD_REQUEST });
+        const res = await axios.post(`${baseURL}/updatePassword`, {
+            ...password
+        });
+
+        if(res.status === 200){
+            const { message } = res.data;
+            dispatch({
+                type: authConstants.UPDATE_PASSWORD_SUCCESS,
+                payload: { message }
+            });
+            dispatch(logout())
+        }else{
+            if(res.status === 400){
+                dispatch({
+                    type: authConstants.UPDATE_PASSWORD_FAILURE,
+                    payload: { error: message }
+                });
+            }
+        }
+    }
+}
+
 export const signup = (user) => {
 
     console.log("Signup user:", user)

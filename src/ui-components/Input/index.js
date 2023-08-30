@@ -6,7 +6,11 @@ const Input = ({
     placeholder = '',
     label = '',
     onChange = () => {},
-    inputContainerStyle = {}
+    inputContainerStyle = {},
+    value = '',
+    disabled = false
+
+    
 }) => {
     return (
         <div 
@@ -21,6 +25,8 @@ const Input = ({
                 placeholder={placeholder}
                 label={label}
                 onChange={onChange}
+                value={value}
+                disabled={disabled}
             />
         </div>
     );

@@ -83,6 +83,19 @@ export default (state = initState, action) => {
             loading: false
         }
         break;
+        case authConstants.UPDATE_SUCCESS:
+            state = {
+                ...state,
+                user: action.payload.user,
+            }
+            break;
+
+        case authConstants.UPDATE_PASSWORD_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+            }
+            break;
 
     }
 
