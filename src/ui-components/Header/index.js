@@ -13,6 +13,7 @@ import { FiUser } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "src/actions/auth.action";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 /*
 
@@ -57,7 +58,7 @@ const NotificationsIcon = ({ onClick = () => {} }) => (
 const NotificationList = ({ img = null, desc = "", datetime = "" }) => {
   return (
     <li>
-      {img && <img src={img} alt="" />}
+      {img && <Image src={img} alt="" />}
       <div className={styles["single-notification"]}>
         <p>{desc}</p>
         <p>{datetime}</p>
@@ -71,11 +72,9 @@ const Header = ({ toggleSidebarMenu }) => {
   const router = useRouter();
   
 const submitLogout = async (e) => {
-  // dispatch(login(user));
-
   try {
     await dispatch(logout());
-    router.push('/login');
+    router.push('/');
   } catch (error) {
     console.error('Error during login:', error);
   }

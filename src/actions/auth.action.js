@@ -23,11 +23,12 @@ export const login = (user) => {
                     token, user
                 }
             });
-        }else{
+        }
+        else{
             if(res.status === 400){
                 dispatch({
                     type: authConstants.LOGIN_FAILURE,
-                    payload: { error: res.data.error }
+                    payload: { error: res.data.message }
                 });
             }
         }
@@ -90,8 +91,6 @@ export const updatePassword = (password) => {
 
 export const signup = (user) => {
 
-    console.log("Signup user:", user)
-
     return async (dispatch) => {
 
         dispatch({ type: authConstants.SIGNUP_REQUEST });
@@ -129,7 +128,7 @@ export const isUserLoggedIn = () => {
             });
         }else{
             dispatch({
-                type: authConstants.LOGIN_FAILURE,
+                type: authConstants.LOGIN_AUTH_FAILURE,
                 payload: { error: 'Failed to login' }
             });
         }

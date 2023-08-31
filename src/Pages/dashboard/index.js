@@ -22,6 +22,8 @@ export default function Dashboard() {
   const portfolios = useSelector(state => state.portfolio);
   const [modal, setModal] = useState(false);
 
+  const totalPortfolios = portfolios.portfolios.length;
+
   const handleClose = () => {
     //alert('closing');
     setModal(false);
@@ -40,8 +42,8 @@ export default function Dashboard() {
   return (
     <>
       <HeaderSection
-        heading={`${upperRole}, Dashboard`}
-        subHeading={`Welcome to airlyStudio, ${auth.user.name}`}
+        heading={`${upperRole}'s, Dashboard`}
+        subHeading={`Hello, ${auth.user.name}. Welcome to airlyStudio.`}
         // rightItem={() => (
         //   <ActionButton
         //     onClick={() => setModal(true)}
@@ -54,14 +56,14 @@ export default function Dashboard() {
       <Section>
         <DataCard
           label={"Total Visiter's"}
-          value={"45,09"}
+          value={"null"}
           percentageValue={3.45}
           inverse={true}
         />
         <DataCard
           label={"Total Portfolio's"}
-          value={"45"}
-          percentageValue={3.45}
+          value={totalPortfolios}
+          // percentageValue={3.45}
           inverse={false}
         />
       </Section>

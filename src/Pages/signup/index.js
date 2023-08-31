@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "src/actions/auth.action";
 import { useRouter } from "next/router";
+import PopupAlert from "@aio/components/PopupAlert";
 
 const Signup = () => {
 
@@ -15,9 +16,20 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
 
+  const [showAlert, setShowAlert] = useState(false);
+
   const dispatch = useDispatch();
   const router = useRouter();
   const auth = useSelector(state => state.auth);
+  const loginError = useSelector(state => state.auth.error);
+
+  const handleShowAlert = () => {
+    setShowAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +39,10 @@ const Signup = () => {
   }
 
     // signup(user);
+
+    {
+      loginError && handleShowAlert() 
+    }
 
     try {
       await dispatch(signup(user));
@@ -91,6 +107,15 @@ const Signup = () => {
                 value={retypePassword}
               />
               <FullButton label={"Login"} />
+
+              {
+                showAlert && (
+                  <PopupAlert
+                    message={loginError}
+                    onClose={handleCloseAlert}
+                  />
+                )
+              }
 
               <p className="tc-grey t-center">
                 If you already have an account.{" "}

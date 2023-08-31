@@ -1,14 +1,26 @@
 import Login from 'pages/login';
+import { useEffect } from 'react';
+import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
+import { getPortfolios, isUserLoggedIn } from 'src/actions';
 
-function PrivateContent({ children }) {
-    const PrivateAuth = useSelector(state => state.auth)
+export default function PrivateContent({ children }) {
+
+  const dispatch = useDispatch();
+  const PrivateAuth = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if (!PrivateAuth.authenticate) {
+      dispatch(isUserLoggedIn());
+    }
+    if (PrivateAuth.authenticate) {
+      dispatch(getPortfolios());
+    }
+  }, [PrivateAuth.authenticate, dispatch]);
 
   if (!PrivateAuth.authenticate) {
-    return <Login />;
+    return <Login />
   }
 
-  return(children);
+  return children;
 }
-
-export default PrivateContent;

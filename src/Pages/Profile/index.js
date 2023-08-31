@@ -55,7 +55,7 @@ const Profile = (props) => {
     return (console.log(auth.user),
         <div className={styles.container}>
             <HeaderSection 
-                heading={'Hello Admin'}
+                heading={`Hello, ${name}`}
                 subHeading={'This is your profile!'}
             />
             <section className={styles["login-container"]}>

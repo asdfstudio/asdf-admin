@@ -21,7 +21,8 @@ export default (state = initState, action) => {
         case authConstants.LOGIN_REQUEST:
             state = {
                 ...state,
-                authenticating: true
+                authenticating: true,
+                loading: true
             }
             break;
         case authConstants.LOGIN_SUCCESS:
@@ -30,10 +31,17 @@ export default (state = initState, action) => {
                 user: action.payload.user,
                 token: action.payload.token,
                 authenticate: true,
-                authenticating: false
+                authenticating: false,
+                loading: false
             }
             break;
         case authConstants.LOGIN_FAILURE:
+        state = {
+            ...state,
+            error: action.payload.error,
+            loading: false
+        }
+        case authConstants.LOGIN_AUTH_FAILURE:
         state = {
             ...state,
             error: action.payload.error,

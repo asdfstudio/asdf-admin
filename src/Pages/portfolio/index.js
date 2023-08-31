@@ -11,6 +11,7 @@ import ImageUpload from '@aio/components/ImageUpload';
 import { tags } from 'src/components/tags';
 import { useDispatch } from 'react-redux';
 import { addPortfolio, addPortfolioTags, getPortfolios } from 'src/actions';
+import Spinner from '@aio/components/Spinner';
 
 
 const Portfolio = () => {
@@ -25,18 +26,15 @@ const Portfolio = () => {
     const [portfolio_tags, setPortfolio_tags] = useState("");
     const [portfolio_images] = useState([]);
 
+    const portfolioLength = portfolios.portfolios.length;
+
     useEffect(() => {
       getPortfolios();
-      console.log("Relaoad")
-    }, [portfolios]);
+    }, [portfolios, dispatch]);
 
     const handleClose = () => {
       setModal(false);
     };
-  
-    const handleCancel = () => {
-      setModal(false);
-    }
 
     const handleFileUpload = (uploadedFiles) => {
       setCoverImage(uploadedFiles[0].file);
@@ -70,82 +68,85 @@ const Portfolio = () => {
     };
     
     return (
+      portfolioLength === 0 ? 
+        <Spinner/> : 
+        portfolios.loading ? <Spinner /> : 
         <>
-            <HeaderSection
-                heading={"Portolio"}
-                subHeading={"App new portfolio"}
-                rightItem={() => (
-                  <ActionButton
-                      onClick={() => setModal(true)}
-                      Icon={AiOutlinePlusCircle}
-                      label="Portfilio"
-                  />
-                )}
+        <HeaderSection
+            heading={"Portolio"}
+            subHeading={"App new portfolio"}
+            rightItem={() => (
+              <ActionButton
+                  onClick={() => setModal(true)}
+                  Icon={AiOutlinePlusCircle}
+                  label="Portfilio"
+              />
+            )}
+        />
+        <ProjectHistory
+          // data={table_data_api} 
+          data={portfolios.portfolios} 
+        />
+
+        <Modal
+            isOpen={modal}
+            onClose={handleClose}
+            heading={"Create New Portfolio"}
+            positiveText={"Save Changes"}
+            onSubmit={handleSubmit}
+        >
+          <form onSubmit={handleSubmit}>
+            <Input
+              inputContainerStyle={{ padding: "15px 30px" }}
+              type="text"
+              placeholder="Title"
+              onChange={(e) => setTitle(e.target.value)}
+              name="title"
+              label={"Title of the portfolio"}
+              value={title}
             />
-            <ProjectHistory
-              // data={table_data_api} 
-              data={portfolios.portfolios} 
+            <Input
+              inputContainerStyle={{ padding: "15px 30px" }}
+              type="text"
+              placeholder="Description"
+              onChange={(e) => setDesc(e.target.value)}
+              name="desc"
+              label={"Description"}
+              value={desc}
             />
+            <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
+              <p>Tags</p>
+              <Select
+                defaultValue={selectedOption}
+                isMulti
+                name="tags"
+                // options={options}
+                options={tags}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                onChange={handleSelectChange}
+              />
+            </div>
 
-            <Modal
-                isOpen={modal}
-                onClose={handleClose}
-                heading={"Create New Portfolio"}
-                positiveText={"Save Changes"}
-                onSubmit={handleSubmit}
-            >
-              <form onSubmit={handleSubmit}>
-                <Input
-                  inputContainerStyle={{ padding: "15px 30px" }}
-                  type="text"
-                  placeholder="Title"
-                  onChange={(e) => setTitle(e.target.value)}
-                  name="title"
-                  label={"Title of the portfolio"}
-                  value={title}
-                />
-                <Input
-                  inputContainerStyle={{ padding: "15px 30px" }}
-                  type="text"
-                  placeholder="Description"
-                  onChange={(e) => setDesc(e.target.value)}
-                  name="desc"
-                  label={"Description"}
-                  value={desc}
-                />
-                <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
-                  <p>Tags</p>
-                  <Select
-                    defaultValue={selectedOption}
-                    isMulti
-                    name="tags"
-                    // options={options}
-                    options={tags}
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    onChange={handleSelectChange}
-                  />
-                </div>
+            <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
+              <p>Select cover photo (Select One)</p>
+              <ImageUpload
+                maxImage="1"
+                onUpload={handleFileUpload}
+              />
+              {/* <input type="file" accept="image/*" onChange={(e) => setCoverImage(e.target.files[0])} /> */}
+            </div>
 
-                <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
-                  <p>Select cover photo (Select One)</p>
-                  <ImageUpload
-                    maxImage="1"
-                    onUpload={handleFileUpload}
-                  />
-                  {/* <input type="file" accept="image/*" onChange={(e) => setCoverImage(e.target.files[0])} /> */}
-                </div>
-
-                <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
-                  <p>Select Portfolio photos</p>
-                  <ImageUpload
-                    maxImage="100"
-                    onUpload={handleFilesUpload}
-                  />
-                </div>
-              </form>
-            </Modal>
-        </>
+            <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
+              <p>Select Portfolio photos</p>
+              <ImageUpload
+                maxImage="100"
+                onUpload={handleFilesUpload}
+              />
+            </div>
+          </form>
+        </Modal>
+      </>
     );
 }
 

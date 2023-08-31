@@ -11,7 +11,7 @@ import FormattedDate from "./FormattedDate";
 
 const baseImageURL = "http://localhost:5000/api/portfolio/images/";
 
-const projectHistory = ({
+const ProjectHistory  = ({
   data=[]
 }) => {
   const [itemList, setItemList] = useState(data);
@@ -112,4 +112,4 @@ const projectHistory = ({
   );
 };
 
-export default projectHistory;
+export default ProjectHistory;

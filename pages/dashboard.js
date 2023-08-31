@@ -1,11 +1,16 @@
+import React from "react";
 import Layout from "../src/ui-components/layout";
 import Dashboard from "../src/Pages/dashboard";
 import PrivateContent from "src/components/PrivateContent";
 
-export default () => (
+const App = () => (
     <PrivateContent>
-        <Layout>
-            <Dashboard />
-        </Layout>
+      <Layout>
+        <Dashboard />
+      </Layout>
     </PrivateContent>
-)
+  );
+  
+  App.displayName = "App";
+  
+  export default App;

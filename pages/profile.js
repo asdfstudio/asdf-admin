@@ -1,11 +1,16 @@
+import React from "react";
 import PrivateContent from "src/components/PrivateContent";
 import Profile from "../src/Pages/Profile";
 import Layout from "@aio/components/layout";
 
-export default () => (
-    <PrivateContent>
+const ProfilePage = () => (
+  <PrivateContent>
     <Layout>
-        <Profile />
+      <Profile />
     </Layout>
-    </PrivateContent>
-)
+  </PrivateContent>
+);
+
+ProfilePage.displayName = "ProfilePage"; // Add the displayName
+
+export default ProfilePage;

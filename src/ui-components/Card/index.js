@@ -123,6 +123,7 @@ const Card = ({
                             : data.portfolio_pictures?.map((data, i) => (
                                 <Image 
                                 // src={`/`+data.coverImage}
+                                key={data.id}
                                 src={`${baseImageURL}${data.image}`}
                                 alt={data.coverImage}
                                 width={0}

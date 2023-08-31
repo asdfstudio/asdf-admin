@@ -8,25 +8,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "src/actions/auth.action";
 import { useRouter } from "next/router";
 import { redirect } from 'next/navigation'
+import PopupAlert from "@aio/components/PopupAlert";
+import Spinner from "@aio/components/Spinner";
 
 const Login = (props) => {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
   const dispatch = useDispatch();
   const router = useRouter();
   const auth = useSelector(state => state.auth);
+  const loginError = useSelector(state => state.auth.error);
+
+  const handleShowAlert = () => {
+    setShowAlert(true);
+  };
+
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const user = {
       email, password
-  }
+    }
 
-    // dispatch(login(user));
-
+    if (auth.authenticate) {
+      handleCloseAlert()
+    } else {
+      loginError && handleShowAlert() 
+    }
+    
     try {
       await dispatch(login(user));
       router.push('/dashboard');
@@ -36,6 +54,8 @@ const Login = (props) => {
   };
 
   return (
+    // auth.loading === true ? 
+    //   <Spinner/> :
       <div className={styles.container}>
         <section className={styles["login-container"]}>
           <div className={styles["brand-container"]}>
@@ -73,6 +93,15 @@ const Login = (props) => {
               />
 
               <FullButton label={"Login"} />
+              {
+                showAlert && (
+                  <PopupAlert
+                    message={loginError}
+                    onClose={handleCloseAlert}
+                  />
+                )
+              }
+                
               {/* <button type="submit" className={styles['btn-style']}>label</button> */}
 
               <p className="tc-grey t-center">
