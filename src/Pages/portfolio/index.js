@@ -12,6 +12,7 @@ import { tags } from 'src/components/tags';
 import { useDispatch } from 'react-redux';
 import { addPortfolio, addPortfolioTags, getPortfolios } from 'src/actions';
 import Spinner from '@aio/components/Spinner';
+import PopupAlert from '@aio/components/PopupAlert';
 
 
 const Portfolio = () => {
@@ -23,10 +24,11 @@ const Portfolio = () => {
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [coverImage, setCoverImage] = useState([]);
-    const [portfolio_tags, setPortfolio_tags] = useState("");
-    const [portfolio_images] = useState([]);
+    const [portfolio_tags, setPortfolio_tags] = useState([]);
+    const [portfolio_images, setPortfolio_images] = useState([]);
 
-    const portfolioLength = portfolios.portfolios.length;
+    const [showAlert, setShowAlert] = useState(false);
+    const [submitError, setSubmitError] = useState("");
 
     useEffect(() => {
       getPortfolios();
@@ -34,40 +36,86 @@ const Portfolio = () => {
 
     const handleClose = () => {
       setModal(false);
+      setTitle("");
+      setDesc("");
+      setCoverImage([]);
+      setPortfolio_tags([]);
     };
 
     const handleFileUpload = (uploadedFiles) => {
-      setCoverImage(uploadedFiles[0].file);
+      const updatedCoverImage = uploadedFiles.map((file) => file.file);
+
+      setCoverImage(...updatedCoverImage);
     };
 
+    // const handleFileUpload = (uploadedFiles) => {
+    //   setCoverImage(uploadedFiles[0].file);
+    // };
+    
+    
     const handleFilesUpload = (uploadedFiles) => {
-      uploadedFiles.forEach((files) => {
-        if (!portfolio_images.includes(files.file)) {
-          portfolio_images.push(files.file);
-        }
-      });
+      // uploadedFiles.forEach((files) => {
+      //   if (!portfolio_images.includes(files.file)) {
+      //     portfolio_images.push(files.file);
+      //   }
+      // });
+      const updatedImages = uploadedFiles.map((file) => file.file);
+
+      setPortfolio_images(updatedImages);
+
+      console.log("uploadedFiles", uploadedFiles)
     };
 
     const handleSelectChange = (selectedOption) => {
       setPortfolio_tags(selectedOption);
     };
-    
+    const handleShowAlert = () => {
+      setShowAlert(true);
+    };
+  
+    const handleCloseAlert = () => {
+      setShowAlert(false);
+    };
 
     const handleSubmit = (e) => {
-      e.preventDefault();
-      const form = new FormData();
-      form.append("name", title);
-      form.append("desc", desc);
-      form.append('coverImage', coverImage);
 
-      const imagestag = {
-        tags: portfolio_tags.map(tag => (tag.label ))
-      };
-      
-      dispatch(addPortfolio(form, portfolio_images, imagestag.tags)).then(() => handleClose());
+      if(!title || !desc || portfolio_tags.length == 0 || coverImage.length == 0){
+        switch (true) {
+          case !title:
+            setSubmitError("Title cannot be empty...");
+            break;
+          case !desc:
+            setSubmitError("Description is empty...");
+            break;
+          case portfolio_tags.length == 0:
+            setSubmitError("Please select any tag to continue...");
+            break;
+          case coverImage.length == 0:
+            setSubmitError("You must add a cover image...");
+            break;
+          default:
+            setSubmitError("Fill the from properly");
+            break;
+        }
+
+        handleShowAlert();
+
+      } else {
+        e.preventDefault();
+        const form = new FormData();
+        form.append("name", title);
+        form.append("desc", desc);
+        form.append('coverImage', coverImage);
+  
+        const imagestag = {
+          tags: portfolio_tags.map(tag => (tag.label ))
+        };
+        
+        dispatch(addPortfolio(form, portfolio_images, imagestag.tags)).then(() => handleClose());
+      }
     };
     
-    return (
+    return (console.log("Images", portfolio_images),
       portfolios.loading ? 
         <Spinner/> : 
         portfolios.loading ? <Spinner /> : 
@@ -144,6 +192,15 @@ const Portfolio = () => {
                 onUpload={handleFilesUpload}
               />
             </div>
+            {
+                showAlert && (
+                  <PopupAlert
+                    message={submitError}
+                    onClose={handleCloseAlert}
+                    color="red"
+                  />
+                )
+              }
           </form>
         </Modal>
       </>

@@ -98,6 +98,7 @@ const Login = (props) => {
                   <PopupAlert
                     message={loginError}
                     onClose={handleCloseAlert}
+                    color="red"
                   />
                 )
               }

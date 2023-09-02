@@ -18,15 +18,16 @@ const ImageUpload = ({
     const handleUpdateFiles = (files) => {
         onUpload(files);
     };
+    const [files, setFiles] = useState([])
     return (
         <div>
             <FilePond
                 // files={files}
-                // onupdatefiles={setFiles}
+                onupdatefiles={handleUpdateFiles}
                 allowReorder={true}
                 allowMultiple={true}
                 maxFiles={maxImage}
-                onupdatefiles={handleUpdateFiles}
+                // onupdatefiles={handleUpdateFiles}
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
             />
         </div>
