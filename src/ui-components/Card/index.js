@@ -8,8 +8,9 @@ import FormattedDate from "src/components/FormattedDate";
 import { deletePortfolioById } from "src/actions";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { BASE_IMAGE_URL } from "urlConfig";
 
-const baseImageURL = "http://localhost:5000/api/portfolio/images/";
+const baseImageURL = BASE_IMAGE_URL;
 
 const Card = ({
     heading = '',
@@ -25,7 +26,9 @@ const Card = ({
     const dispatch = useDispatch();
     const router = useRouter();
     const [viewModal, setViewModal] = useState(false);
-    const [editModal, setEditModal] = useState(false);
+    const [deleteConfirmModal, setDeleteConfirmModal] = useState(false);
+
+    const ConfrimHeading = "Are you sure you want to delete, ";
     const handleCloseViewModal = () => {
       setViewModal(false);
     };
@@ -35,7 +38,7 @@ const Card = ({
     };
 
     const handleCloseEditModal = () => {
-        setEditModal(false);
+        setDeleteConfirmModal(false);
       };
     const handleDeletePortfolio = async () => {
         const payload = {
@@ -46,11 +49,11 @@ const Card = ({
         // dispatch(addPortfolio(form)).then(() => handleClose());
       };
     const handleEditPortfolio = () => {
-        alert('Submit is working..!');
+        alert('Under development..!');
       };
       
-      const openEditModal = () => {
-        setEditModal(true);
+      const openDeleteConfirmModal = () => {
+        setDeleteConfirmModal(true);
       };
     return (
         <>
@@ -83,9 +86,9 @@ const Card = ({
                             footerRight == "true" && 
                             <ActionButton
                                 inverse={true}
-                                label="Edit"
+                                label="Delete"
                                 style={{ padding: "4px 10px", fontSize: 14 }}
-                                onClick={openEditModal}
+                                onClick={openDeleteConfirmModal}
                             />
                         }
                     </div>
@@ -96,11 +99,11 @@ const Card = ({
                 isOpen={viewModal}
                 heading={heading}
                 onClose={handleCloseViewModal}
-                onDelete={handleDeletePortfolio}
+                // onDelete={handleDeletePortfolio}
                 onSubmit={handleEditPortfolio}
                 positiveText={'Edit'}
                 // negativeText={'Cancel'}
-                negativeText2={'Delete'}
+                // negativeText2={'Delete'}
             >
                 {data &&
                     <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"0px" }}>
@@ -133,8 +136,8 @@ const Card = ({
                                 style={{ width: '100%', height: 'auto' }}
 
                                 // layout="fill"
-                                objectFit="contain"
-                                objectPosition="center"
+                                // objectFit="contain"
+                                priority
                             />
                         ))
                     }
@@ -143,18 +146,14 @@ const Card = ({
             </Modal>
 
             <Modal
-                isOpen={editModal}
-                heading={heading}
+                isOpen={deleteConfirmModal}
+                heading={ConfrimHeading + heading + "?"}
                 onClose={handleCloseEditModal}
-                positiveText={'Edit '}
-                // negativeText={'Cancel'}
+                positiveText={'Yes'}
+                negativeText2={'Cancel'}
+                onDelete={handleCloseEditModal}
+                onSubmit={handleDeletePortfolio}
             >
-                {data &&
-                    <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"20px" }}>
-                        <p>{data?.projectDate}</p>
-                        <p>{data?.desc}</p>
-                    </div>
-                }
             </Modal>
         </>
     );

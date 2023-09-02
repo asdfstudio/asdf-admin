@@ -68,7 +68,7 @@ const Portfolio = () => {
     };
     
     return (
-      portfolioLength === 0 ? 
+      portfolios.loading ? 
         <Spinner/> : 
         portfolios.loading ? <Spinner /> : 
         <>

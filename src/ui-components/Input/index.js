@@ -25,7 +25,7 @@ const Input = ({
                 placeholder={placeholder}
                 label={label}
                 onChange={onChange}
-                value={value}
+                defaultValue={value}
                 disabled={disabled}
             />
         </div>

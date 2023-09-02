@@ -1,8 +1,9 @@
 // import axios from "axios";
 import { authConstants } from "./constants";
 import axios from "../helpers/axios";
+import { API } from "urlConfig";
 
-const baseURL = "http://localhost:5000/api";
+const baseURL = API;
 
 export const login = (user) => {
 

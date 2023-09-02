@@ -1,9 +1,9 @@
-const baseURL = "http://localhost:5000/api/";
-
 import axios from "../helpers/axios";
 import { productConstants } from "./constants";
+import { API } from "urlConfig";
 
-// new action
+const baseURL = API;
+
 export const getPortfolios = () => {
   return async (dispatch) => {
     try {
@@ -38,6 +38,23 @@ export const addPortfolio = (form, portfolio_images, portfolio_tags) => {
         dispatch(addPortfolioTags(portfolioId, portfolio_tags));
       } else {
         dispatch({ type: productConstants.ADD_PORTFOLIO_FAILURE });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updatedSortedPortfolio = (items) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: productConstants.SORT_PORTFOLIO_REQUEST });
+      const res = await axios.post(`${baseURL}portfolio/updateSorting`, {items});
+      if (res.status === 201) {
+        dispatch({ type: productConstants.SORT_PORTFOLIO_SUCCESS });
+        // dispatch(getPortfolios());
+      } else {
+        dispatch({ type: productConstants.SORT_PORTFOLIO_FAILURE });
       }
     } catch (error) {
       console.log(error);

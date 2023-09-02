@@ -8,13 +8,19 @@ import Tag from "@aio/components/Tag";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import FormattedDate from "./FormattedDate";
+import { BASE_IMAGE_URL } from "urlConfig";
+import { updatedSortedPortfolio } from "src/actions";
+import { useDispatch } from "react-redux";
+import ActionButton from "@aio/components/ActionButton";
 
-const baseImageURL = "http://localhost:5000/api/portfolio/images/";
+const baseImageURL = BASE_IMAGE_URL;
 
 const ProjectHistory  = ({
   data=[]
 }) => {
+  const dispatch = useDispatch();
   const [itemList, setItemList] = useState(data);
+  const [sortOccour, setSortOccour] = useState(false);
 
   function handleDrop(result) {
 
@@ -23,8 +29,13 @@ const ProjectHistory  = ({
     const items = Array.from(itemList);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
+    
+    setSortOccour(true);
 
     setItemList(items);
+  };
+  const updateSortingPortfolio = () => {
+    // dispatch(updatedSortedPortfolio(itemList));
   };
   return (
     <div className={styles["row"]}>
@@ -37,74 +48,78 @@ const ProjectHistory  = ({
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
+              <div className={styles["sortButton"]}>
+                { sortOccour &&
+                    <ActionButton
+                      inverse={false}
+                      label="Save sorting"
+                      style={{ padding: "8px 10px", fontSize: 14, float:"right", margin: "10px 20px" }}
+                      onClick={updateSortingPortfolio}
+                    /> }
+              </div>
+              <div className={styles["column"]}>
+              { itemList.map((data, i) => (
+                <Draggable key={data.id} draggableId={data.id} index={i}>
+                {(provided) => (
+                <div
+                  key={i} 
+                  ref={provided.innerRef}
+                  {...provided.dragHandleProps}
+                  {...provided.draggableProps}
+                >
+                  <Card
+                    heading={data.name}
+                    data={data}
+                    footerLeft={() => {
+                      return (
+                        <div className={styles["date-placeholder"]}>
+                          <SlCalender />
+                          <p className="ml-5">
+                            <FormattedDate mysqlDateTimeString={data?.createdAt} />
+                          </p>
+                        </div>
+                      );
+                    }}
+                  >
+                    <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"20px" }}>
+                      <p>{data.desc}</p>
+                      <div className={styles["tagContainer"]}>
+                      {
+                          data.portfolio_tags.map((tag, i) => (
+                            <div className={styles["tagAllign"]} key={i}>
+                              <Tag
+                                label={tag.tag}
+                                inverse={true}
+                              />
+                            </div>
+                          ))
+                        }
+                      </div>
+                      <div className={styles["imageContainer"]}>
+                        <Image 
+                          // src={`/`+data.coverImage}
+                          src={`${baseImageURL}${data.coverImage}`}
+                          alt={data.coverImage}
+                          width={400}
+                          height={250}
+                          sizes="100vw"
+                          // fill={true}
+                          style={{ borderRadius: 10}}
 
-      <div className={styles["column"]}>
-      { itemList.map((data, i) => (
-        <Draggable key={data.id} draggableId={data.id} index={i}>
-        {(provided) => (
-        
-        
-        <div
-          key={i} 
-          ref={provided.innerRef}
-          {...provided.dragHandleProps}
-          {...provided.draggableProps}
-        >
-          <Card
-            heading={data.name}
-            data={data}
-            footerLeft={() => {
-              return (
-                <div className={styles["date-placeholder"]}>
-                  <SlCalender />
-                  <p className="ml-5">
-                    <FormattedDate mysqlDateTimeString={data?.createdAt} />
-                  </p>
-                </div>
-              );
-            }}
-          >
-            <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"20px" }}>
-              <p>{data.desc}</p>
-              <div className={styles["tagContainer"]}>
-              {
-                  data.portfolio_tags.map((tag, i) => (
-                    <div className={styles["tagAllign"]} key={i}>
-                      <Tag
-                        label={tag.tag}
-                        inverse={true}
-                      />
+                          // layout="fill"
+                          // objectFit="contain"
+                          priority
+                        />
+                      </div>
                     </div>
-                  ))
-                }
-              </div>
-              <div className={styles["imageContainer"]}>
-                <Image 
-                  // src={`/`+data.coverImage}
-                  src={`${baseImageURL}${data.coverImage}`}
-                  alt={data.coverImage}
-                  width={400}
-                  height={250}
-                  sizes="100vw"
-                  // fill={true}
-                  style={{ borderRadius: 10}}
-
-                  // layout="fill"
-                  objectFit="contain"
-                  objectPosition="center"
-                />
-              </div>
-            </div>
-          </Card>
-        </div>
-
-          )}
-        </Draggable>
-    ))}
-    </div>
-
-{provided.placeholder}
-            </div>
+                  </Card>
+                </div>
+              )}
+            </Draggable>
+          ))}
+          </div>
+          {provided.placeholder}
+          </div>
           )}
         </Droppable>
       </DragDropContext>

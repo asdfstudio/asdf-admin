@@ -56,8 +56,8 @@ export default function Dashboard() {
       <Section>
         <DataCard
           label={"Total Visiter's"}
-          value={"null"}
-          percentageValue={3.45}
+          value={"Need to develop"}
+          percentageValue={0}
           inverse={true}
         />
         <DataCard
@@ -152,46 +152,44 @@ export default function Dashboard() {
       {/* <BillingHistory /> */}
 
       <Modal
-                isOpen={modal}
-                onClose={handleClose}
-                heading={"Create New Portfolio"}
-                positiveText={"Save Changes"}
-                // negativeText={"Cancel"}
-                onCancel={handleCancel}
-                onSubmit={handleSubmit}
-            >
-                            <div>
-              <Input
-                inputContainerStyle={{ padding: "15px 30px" }}
-                type="text"
-                placeholder="Title"
-                onChange={(e) => console.log(e)}
-                name="title"
-                label={"Title of the portfolio"}
-              />
-              <Input
-                inputContainerStyle={{ padding: "15px 30px" }}
-                type="password"
-                placeholder="Description"
-                onChange={(e) => console.log(e)}
-                name="desc"
-                label={"Description"}
-              />
+        isOpen={modal}
+        onClose={handleClose}
+        heading={"Create New Portfolio"}
+        positiveText={"Save Changes"}
+        // negativeText={"Cancel"}
+        onCancel={handleCancel}
+        onSubmit={handleSubmit}
+    >
+                    <div>
+      <Input
+        inputContainerStyle={{ padding: "15px 30px" }}
+        type="text"
+        placeholder="Title"
+        onChange={(e) => console.log(e)}
+        name="title"
+        label={"Title of the portfolio"}
+      />
+      <Input
+        inputContainerStyle={{ padding: "15px 30px" }}
+        type="password"
+        placeholder="Description"
+        onChange={(e) => console.log(e)}
+        name="desc"
+        label={"Description"}
+      />
 
-                {/* {portfolioTags.map((tag, index) => (
-                  <Input
-                  inputContainerStyle={{ }}
-                  type="checkbox"
-                  placeholder=""
-                  onChange={(e) => console.log(e)}
-                  name="tag"
-                  label={tag.text}
-                />
-                ))} */}
-
-
-            </div>
-            </Modal>
+        {/* {portfolioTags.map((tag, index) => (
+          <Input
+          inputContainerStyle={{ }}
+          type="checkbox"
+          placeholder=""
+          onChange={(e) => console.log(e)}
+          name="tag"
+          label={tag.text}
+        />
+        ))} */}
+      </div>
+    </Modal>
     </>
   );
 }
