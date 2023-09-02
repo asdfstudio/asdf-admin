@@ -52,7 +52,7 @@ export const updatedSortedPortfolio = (items) => {
       const res = await axios.post(`${baseURL}portfolio/updateSorting`, {items});
       if (res.status === 201) {
         dispatch({ type: productConstants.SORT_PORTFOLIO_SUCCESS });
-        // dispatch(getPortfolios());
+        dispatch(getPortfolios());
       } else {
         dispatch({ type: productConstants.SORT_PORTFOLIO_FAILURE });
       }

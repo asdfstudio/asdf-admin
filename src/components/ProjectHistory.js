@@ -35,7 +35,7 @@ const ProjectHistory  = ({
     setItemList(items);
   };
   const updateSortingPortfolio = () => {
-    // dispatch(updatedSortedPortfolio(itemList));
+    dispatch(updatedSortedPortfolio(itemList));
   };
   return (
     <div className={styles["row"]}>
