@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { addPortfolio, addPortfolioTags, getPortfolios } from 'src/actions';
 import Spinner from '@aio/components/Spinner';
 import PopupAlert from '@aio/components/PopupAlert';
+import CoverImageUpload from '@aio/components/CoverImageUpload';
 
 
 const Portfolio = () => {
@@ -36,10 +37,10 @@ const Portfolio = () => {
 
     const handleClose = () => {
       setModal(false);
-      setTitle("");
-      setDesc("");
+      setTitle(title);
+      setDesc(desc);
       setCoverImage([]);
-      setPortfolio_tags([]);
+      // setPortfolio_tags([]);
     };
 
     const handleFileUpload = (uploadedFiles) => {
@@ -143,7 +144,7 @@ const Portfolio = () => {
             positiveText={"Save Changes"}
             onSubmit={handleSubmit}
         >
-          <form onSubmit={handleSubmit}>
+          <div>
             <Input
               inputContainerStyle={{ padding: "15px 30px" }}
               type="text"
@@ -178,7 +179,7 @@ const Portfolio = () => {
 
             <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
               <p>Select cover photo (Select One)</p>
-              <ImageUpload
+              <CoverImageUpload
                 maxImage="1"
                 onUpload={handleFileUpload}
               />
@@ -190,6 +191,7 @@ const Portfolio = () => {
               <ImageUpload
                 maxImage="100"
                 onUpload={handleFilesUpload}
+                files={portfolio_images}
               />
             </div>
             {
@@ -201,7 +203,7 @@ const Portfolio = () => {
                   />
                 )
               }
-          </form>
+          </div>
         </Modal>
       </>
     );

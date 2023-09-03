@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 import { FilePond, File, registerPlugin } from 'react-filepond'
 
@@ -9,37 +9,23 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)  
 
-const ImageUpload = ({
+const CoverImageUpload = ({
     maxImage = "",
     onUpload,
-    files
+    // files
 }) => {
-    const pondRef = useRef(null);
-
-    const handleUpdateFiles = (files) => {
+    const handleUpdateFile = (files) => {
         onUpload(files);
     };
-
-    const handleSaveChanges = () => {
-        const currentOrder = pondRef.current.getFiles();
-        // const reorderedImages = currentOrder.map((file) => file.file);
-        onUpload(currentOrder);
-      };
-
-
     return (
         <div>
             <FilePond
-                ref={pondRef}
-                files={files}
-                onupdatefiles={handleUpdateFiles}
-                allowReorder={true}
-                allowMultiple={true}
+                // files={files}
+                onupdatefiles={handleUpdateFile}
                 maxFiles={maxImage}
                 labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
             />
-             <button onClick={handleSaveChanges}>Save Sorting</button>
         </div>
     );
 }
-export default ImageUpload;
+export default CoverImageUpload;
