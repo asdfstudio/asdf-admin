@@ -52,7 +52,7 @@ const Profile = (props) => {
 
       };
 
-    return (console.log(auth.user),
+    return (
         <div className={styles.container}>
             <HeaderSection 
                 heading={`Hello, ${name}`}

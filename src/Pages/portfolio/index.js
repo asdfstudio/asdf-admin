@@ -48,23 +48,11 @@ const Portfolio = () => {
 
       setCoverImage(...updatedCoverImage);
     };
-
-    // const handleFileUpload = (uploadedFiles) => {
-    //   setCoverImage(uploadedFiles[0].file);
-    // };
-    
     
     const handleFilesUpload = (uploadedFiles) => {
-      // uploadedFiles.forEach((files) => {
-      //   if (!portfolio_images.includes(files.file)) {
-      //     portfolio_images.push(files.file);
-      //   }
-      // });
       const updatedImages = uploadedFiles.map((file) => file.file);
 
       setPortfolio_images(updatedImages);
-
-      console.log("uploadedFiles", uploadedFiles)
     };
 
     const handleSelectChange = (selectedOption) => {
@@ -116,7 +104,7 @@ const Portfolio = () => {
       }
     };
     
-    return (console.log("Images", portfolio_images),
+    return (
       portfolios.loading ? 
         <Spinner/> : 
         portfolios.loading ? <Spinner /> : 
@@ -183,7 +171,6 @@ const Portfolio = () => {
                 maxImage="1"
                 onUpload={handleFileUpload}
               />
-              {/* <input type="file" accept="image/*" onChange={(e) => setCoverImage(e.target.files[0])} /> */}
             </div>
 
             <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>

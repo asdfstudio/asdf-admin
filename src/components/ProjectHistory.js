@@ -101,13 +101,9 @@ const ProjectHistory  = ({
                           src={`${baseImageURL}${data.coverImage}`}
                           alt={data.coverImage}
                           width={400}
-                          height={250}
+                          height={350}
                           sizes="100vw"
-                          // fill={true}
-                          style={{ borderRadius: 10}}
-
-                          // layout="fill"
-                          // objectFit="contain"
+                          style={{ borderRadius: 10, objectFit: "cover"}}
                           priority
                         />
                       </div>

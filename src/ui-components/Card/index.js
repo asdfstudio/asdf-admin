@@ -132,11 +132,7 @@ const Card = ({
                                 width={0}
                                 height={0}
                                 sizes="80vw"
-                                // fill={true}
-                                style={{ width: '100%', height: 'auto' }}
-
-                                // layout="fill"
-                                // objectFit="contain"
+                                style={{ width: '100%', height: 'auto', objectFit: "cover" }}
                                 priority
                             />
                         ))
