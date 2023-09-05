@@ -43,6 +43,15 @@ const Portfolio = () => {
       // setPortfolio_tags([]);
     };
 
+    const handleCloseAfterSubmit = () => {
+      setModal(false);
+      setTitle('');
+      setDesc('');
+      setCoverImage([]);
+      setPortfolio_tags([]);
+      setPortfolio_images([]);
+    };
+
     const handleFileUpload = (uploadedFiles) => {
       const updatedCoverImage = uploadedFiles.map((file) => file.file);
 
@@ -100,7 +109,7 @@ const Portfolio = () => {
           tags: portfolio_tags.map(tag => (tag.label ))
         };
         
-        dispatch(addPortfolio(form, portfolio_images, imagestag.tags)).then(() => handleClose());
+        dispatch(addPortfolio(form, portfolio_images, imagestag.tags)).then(() => handleCloseAfterSubmit());
       }
     };
     
@@ -178,7 +187,7 @@ const Portfolio = () => {
               <ImageUpload
                 maxImage="100"
                 onUpload={handleFilesUpload}
-                files={portfolio_images}
+                // files={portfolio_images}
               />
             </div>
             {

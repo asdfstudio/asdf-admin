@@ -13,7 +13,7 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 const ImageUpload = ({
     maxImage = "",
     onUpload,
-    files
+    // files
 }) => {
     const pondRef = useRef(null);
 
@@ -32,7 +32,7 @@ const ImageUpload = ({
         <div>
             <FilePond
                 ref={pondRef}
-                files={files}
+                // files={files}
                 onupdatefiles={handleUpdateFiles}
                 allowReorder={true}
                 allowMultiple={true}
