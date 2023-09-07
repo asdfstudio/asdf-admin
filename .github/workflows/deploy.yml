@@ -15,7 +15,7 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          cd /var/www/airly          
+          cd /var/www/airly_admin         
           npm install
           npm run build
 
