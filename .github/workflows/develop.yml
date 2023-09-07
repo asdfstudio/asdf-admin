@@ -2,23 +2,21 @@ name: Deploy Airly_Admin
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ "develop" ]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
-    steps:       
+
+    steps:
+    - uses: actions/checkout@v3
     - name: Deploy Airly_Admin
-      uses: appleboy/ssh-action@master
+      uses: actions/setup-node@v3
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
-        script: |
-          cd /var/www/airly_admin/
-          git pull origin develop
-          npm install
-          npm run build
-          nginx -t
-          systemctl restart nginx
+    - run: npm install
+    - run: npm run build --if-present
