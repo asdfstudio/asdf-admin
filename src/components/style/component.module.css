@@ -40,7 +40,7 @@
     flex-direction: row;
 }
 .tagContainer{
-    width: 300px;
+    width: 400px;
     margin: 5px;    
     display: flex;
     flex-flow: wrap;
@@ -52,6 +52,9 @@
       display: block;
       padding: 10px;
       margin-bottom: -20px;
+    }
+    .tagContainer{
+      width: 300px;
     }
   }
   
