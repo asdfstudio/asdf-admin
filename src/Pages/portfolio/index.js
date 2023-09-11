@@ -165,6 +165,7 @@ const Portfolio = () => {
               <Select
                 defaultValue={selectedOption}
                 isMulti
+                isSearchable 
                 name="tags"
                 // options={options}
                 options={tags}
