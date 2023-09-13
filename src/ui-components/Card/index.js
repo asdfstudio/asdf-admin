@@ -5,7 +5,7 @@ import ActionButton from "../ActionButton";
 import Image from "next/image";
 import Tag from "../Tag";
 import FormattedDate from "src/components/FormattedDate";
-import { addPortfolio, deletePortfolioById } from "src/actions";
+import { addPortfolio, deletePortfolioById, updatePortfolio } from "src/actions";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { BASE_IMAGE_URL } from "urlConfig";
@@ -27,10 +27,12 @@ const Card = ({
     footerLeft = null,
     footerRight = "true",
     width=null,
-    data=[]
+    data=[],
+    isAnyModalOpen
 }) => {
     const dispatch = useDispatch();
     const router = useRouter();
+    const [anyModal, setAnyModal] = useState(false);
     const [viewModal, setViewModal] = useState(false);
     const [deleteConfirmModal, setDeleteConfirmModal] = useState(false);
 
@@ -61,40 +63,53 @@ const Card = ({
     
     const [selectedOption, setSelectedOption] = useState(initialSelectedTags);
 
-    const filteredTags = tags.filter((tag) => !selectedOption.some((selected) => selected.label === tag.label));
+    const filteredTags = tags.filter((tag) => !selectedOption?.some((selected) => selected.label === tag.label));
 
     const ConfrimHeading = "Are you sure you want to delete, ";
+
+    const handleAnyModalClose = () => {
+        setAnyModal(true);
+        isAnyModalOpen(anyModal);
+      };
+      const handleAnyModalOpen = () => {
+        setAnyModal(false);
+        isAnyModalOpen(anyModal);
+      };
     const handleCloseViewModal = () => {
       setViewModal(false);
+      handleAnyModalClose()
     };
     
     const openViewModal = () => {
       setViewModal(true);
+      handleAnyModalOpen()
     };
 
     const handleCloseDeleteModal = () => {
         setDeleteConfirmModal(false);
+        handleAnyModalClose()
       };
     const handleDeletePortfolio = async () => {
         const payload = {
             portfolioId: data.id,
         };
         await dispatch(deletePortfolioById(payload)).then(() => handleCloseViewModal());
-        // router.reload();
-        // dispatch(addPortfolio(form)).then(() => handleClose());
       };
       
     const openDeleteConfirmModal = () => {
         setDeleteConfirmModal(true);
+        handleAnyModalOpen()
     };
 
     // edit
 
     const handleCloseEditModal = () => {
         setEditConfirmModal(false);
+        handleAnyModalClose()
       };
     const openEditConfirmModal = () => {
         setEditConfirmModal(true);
+        handleAnyModalOpen()
       };
     const handleSelectChange = (selectedOption) => {
         setSelectedOption(selectedOption);
@@ -123,7 +138,11 @@ const Card = ({
 
     const handleEditPortfolio = (e) => {
 
-        if(!titleEdit || !descEdit || initialSelectedTags.length == 0){
+        const imagestag = {
+            tags: selectedOption.map(tag => (tag.label))
+          };
+
+        if(!titleEdit || !descEdit || imagestag.tags.length === 0){
           switch (true) {
             case !titleEdit:
               setSubmitError("Title cannot be empty...");
@@ -131,7 +150,7 @@ const Card = ({
             case !descEdit:
               setSubmitError("Description is empty...");
               break;
-            case initialSelectedTags.length == 0:
+            case imagestag.tags.length === 0:
               setSubmitError("Please select any tag to continue...");
               break;
             default:
@@ -144,15 +163,12 @@ const Card = ({
         } else {
           e.preventDefault();
           const form = new FormData();
+          form.append("id", data.id);
           form.append("name", titleEdit);
           form.append("desc", descEdit);
-          form.append('coverImage', coverImageEdit);
-    
-          const imagestag = {
-            tags: selectedOption.map(tag => (tag.label))
-          };
-          
-            dispatch(addPortfolio(form, portfolio_imagesEdit, imagestag.tags)).then(() => handleCloseAfterSubmit());
+          form.append('coverImageUpdate', coverImageEdit);
+
+          dispatch(updatePortfolio(form, portfolio_imagesEdit, imagestag.tags)).then(() => handleCloseAfterSubmit());
         }
       };
 
@@ -237,7 +253,7 @@ const Card = ({
                                     // src={`/`+data.coverImage}
                                     key={data.id}
                                     src={`${baseImageURL}${data.image}`}
-                                    alt={data.coverImage}
+                                    alt={data.id}
                                     width={0}
                                     height={0}
                                     sizes="80vw"

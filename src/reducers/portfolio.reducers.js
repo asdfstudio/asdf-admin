@@ -25,6 +25,24 @@ export default (state = initialState, action) => {
                 loading: false
             }
             break;
+        case productConstants.UPDATE_PORTFOLIO_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case productConstants.UPDATE_PORTFOLIO_SUCCESS:
+            state = {
+                ...state,
+                loading: false
+            }
+            break;
+        case productConstants.UPDATE_PORTFOLIO_FAILURE:
+            state = {
+                ...state,
+                loading: false
+            }
+            break;
         case productConstants.SORT_PORTFOLIO_REQUEST:
             state = {
                 ...state,

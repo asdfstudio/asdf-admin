@@ -21,6 +21,7 @@ const ProjectHistory  = ({
   const dispatch = useDispatch();
   const [itemList, setItemList] = useState(data);
   const [sortOccour, setSortOccour] = useState(false);
+  const [anyModal, setAnyModal] = useState(false);
 
   function handleDrop(result) {
 
@@ -36,6 +37,9 @@ const ProjectHistory  = ({
   };
   const updateSortingPortfolio = () => {
     dispatch(updatedSortedPortfolio(itemList));
+  };
+  const isAnyModalOpenHandle = (data) => {
+    setAnyModal(data);
   };
   return (
     <div className={styles["row"]}>
@@ -59,7 +63,7 @@ const ProjectHistory  = ({
               </div>
               <div className={styles["column"]}>
               { itemList.map((data, i) => (
-                <Draggable key={data.id} draggableId={data.id} index={i}>
+                <Draggable key={data.id} draggableId={data.id} index={i} isDragDisabled={anyModal}>
                 {(provided) => (
                 <div
                   key={i} 
@@ -70,6 +74,7 @@ const ProjectHistory  = ({
                   <Card
                     heading={data.name}
                     data={data}
+                    isAnyModalOpen={isAnyModalOpenHandle}
                     footerLeft={() => {
                       return (
                         <div className={styles["date-placeholder"]}>
