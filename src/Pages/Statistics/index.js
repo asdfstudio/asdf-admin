@@ -3,6 +3,7 @@ import DoughnutChartExample from "../../components/DoughnutChartExample";
 import Card from "@aio/components/Card";
 import HeaderSection from "@aio/components/HeaderSection";
 import Section from "@aio/components/Section";
+import styles from "./Statistics.module.css";
 
 const Statistics = () => {
   const cardContainer = {
@@ -17,10 +18,7 @@ const Statistics = () => {
         subHeading={"Visualize your data"}
       />
       <Section>
-      <div style={{
-                display: "flex",
-                gap: "10px"
-              }}>
+      <div className={styles["graphCard"]}>
           <Card
             heading="Bar Chart Example"
             subHeading="An Introduction to bar chart support on aio"

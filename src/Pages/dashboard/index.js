@@ -16,6 +16,7 @@ import Paragraph from "../../components/Paragraph";
 import BarChartExample from "../../components/BarChartExample";
 import Input from "@aio/components/Input";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 export default function Dashboard() {
   const auth = useSelector(state => state.auth);
@@ -60,19 +61,18 @@ export default function Dashboard() {
           percentageValue={0}
           inverse={true}
         />
-        <DataCard
-          label={"Total Portfolio's"}
-          value={totalPortfolios}
-          // percentageValue={3.45}
-          inverse={false}
-        />
+        <Link href={"/portfolio"}>
+          <DataCard
+            label={"Total Portfolio's"}
+            value={totalPortfolios}
+            // percentageValue={3.45}
+            inverse={false}
+          />
+        </Link>
       </Section>
 
-      <Section>
-        <div style={{
-                display: "flex",
-                gap: "10px"
-              }}>
+      <Section className={styles["graphCard"]}>
+        <div>
           <Card
             heading="Bar Chart Example"
             subHeading="Lets see how data is ploting on chartjs"
