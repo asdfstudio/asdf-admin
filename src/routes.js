@@ -1,4 +1,4 @@
-import { IoGridOutline } from "react-icons/io5";
+import { IoAlbumsOutline, IoGridOutline } from "react-icons/io5";
 import { BsSpeedometer2 } from "react-icons/bs";
 import { BiUserCircle } from "react-icons/bi";
 import { AiOutlineBarChart } from "react-icons/ai";
@@ -13,6 +13,11 @@ export default [
         to: '/portfolio',
         name: 'Portfolio',
         Icon: IoGridOutline
+    },
+    {
+        to: '/blog',
+        name: 'Blog',
+        Icon: IoAlbumsOutline
     },
     {
         to: '/profile',

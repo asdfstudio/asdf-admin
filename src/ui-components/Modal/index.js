@@ -36,9 +36,12 @@ const Modal = ({
                     negativeText2 == '' ? null :  
                     <TextButton onClick={onDelete} fontWeight={'normal'} label={negativeText2} />
                   }
+                  {
+                    positiveText == '' ? null :  
                     <div className="ml-1">
                       <InlineButton onClick={onSubmit} label={positiveText} />
                     </div>
+                  }
                 </div>
             </div>
           </div>
