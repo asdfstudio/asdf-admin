@@ -145,13 +145,8 @@ const BlogCard = ({
     return (
         <>
             <div className={styles["card"]}>
-                <div className={styles["card-header"]}>
-                    <div className={styles["card-left"]}>
-                        <h2 className="s-16">{heading}</h2>
-                        <p className="s-12 tc-grey">{subHeading}</p>
-                    </div>
-                    <div className="card-right">
-                        <div className={styles["card-right-collection"]}>
+                <div className="card-right">
+                    <div className={styles["card-right-collection"]}>
                         <div>
                             {
                                 topRight == "true" &&
@@ -170,6 +165,11 @@ const BlogCard = ({
                           </p>
                         </div>
                     </div>
+                </div>
+                <div className={styles["card-header"]}>
+                    <div className={styles["card-left"]}>
+                        <h2 className="s-16">{heading}</h2>
+                        <p className="s-12 tc-grey">{subHeading}</p>
                     </div>
                 </div>
                 <div className={styles["card-body"]}>

@@ -98,9 +98,9 @@ const BlogHistory  = ({
                           // src={`/`+data.coverImage}
                           src={`${baseImageURL}${data.coverImage}`}
                           alt={data.coverImage}
-                          width={400}
-                          height={350}
-                          sizes="100vw"
+                          width={300}
+                          height={250}
+                          sizes="50vw"
                           style={{ borderRadius: 10, objectFit: "cover"}}
                           priority
                         />
