@@ -14,6 +14,11 @@ import CoverImageUpload from "../CoverImageUpload";
 import Input from "../Input";
 import { IoEyeOutline } from "react-icons/io5";
 
+import { Editor as DraftEditor } from 'react-draft-wysiwyg';
+import { Editor, EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js';
+import 'draft-js/dist/Draft.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 const baseImageURL = BASE_IMAGE_URL;
 
 const BlogCard = ({
@@ -42,6 +47,16 @@ const BlogCard = ({
     const [titleEdit, settitleEdit] = useState(data.title);
     const [descEdit, setdescEdit] = useState(data.desc);
     const [coverImageEdit, setcoverImageEdit] = useState();
+
+    //rich text
+    const parsedContent = JSON.parse(data.long_desc);
+    const contentState = convertFromRaw(parsedContent);
+    const editorState = EditorState.createWithContent(contentState);
+
+    const [editorStateEdit, setEditorStateEdit] = useState(EditorState.createWithContent(contentState));
+    const handleEditorChange = (state) => {
+        setEditorStateEdit(state);
+    };
 
     const handleCloseAfterSubmit = () => {
         handleCloseEditModal(false);
@@ -132,10 +147,12 @@ const BlogCard = ({
   
         } else {
           e.preventDefault();
+          const long_desc = JSON.stringify(convertToRaw(editorStateEdit.getCurrentContent()));
           const form = new FormData();
           form.append("blogId", data.id);
           form.append("title", titleEdit);
           form.append("desc", descEdit);
+          form.append("long_desc", long_desc);
           form.append('coverImageUpdate', coverImageEdit);
 
           dispatch(updateBlog(form)).then(() => handleCloseAfterSubmit());
@@ -212,8 +229,26 @@ const BlogCard = ({
             >
                 {data &&
                     <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"0px" }}>
-                        <p>Total views: {data?.views}</p>
                         <FormattedDate mysqlDateTimeString={data?.upload_time} />
+                        <p>Total views: {data?.views}</p>
+
+                        <div className={styles["imageContainer"]}>
+                            <Image 
+                            // src={`/`+data.coverImage}
+                            src={`${baseImageURL}${data.coverImage}`}
+                            alt={data.coverImage}
+                            width={300}
+                            height={250}
+                            sizes="50vw"
+                            style={{ borderRadius: 10, objectFit: "cover"}}
+                            priority
+                            />
+                         </div>
+
+                        <Editor
+                            editorState={editorState}
+                            readOnly={true} // Set the editor to read-only mode
+                        />
                     </div>
                 }
             </Modal>
@@ -255,6 +290,10 @@ const BlogCard = ({
                         label={"Description"}
                         value={descEdit}
                     />
+
+                    <div style={{padding: "20px 30px"}}>
+                        <DraftEditor editorState={editorStateEdit} onEditorStateChange={handleEditorChange} />
+                    </div>
 
                     <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
                         <p>Select cover photo (Select One)</p>

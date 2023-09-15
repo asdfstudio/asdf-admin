@@ -12,9 +12,14 @@ import CoverImageUpload from '@aio/components/CoverImageUpload';
 import BlogHistory from 'src/components/BlogHistory';
 import { useDispatch } from 'react-redux';
 
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 
 const Blog = () => {
   const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth);
     const blogs = useSelector(state => state.blog);
     const [modal, setModal] = useState(false);
 
@@ -24,6 +29,12 @@ const Blog = () => {
 
     const [showAlert, setShowAlert] = useState(false);
     const [submitError, setSubmitError] = useState("");
+
+    // Rich Text
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const handleEditorChange = (state) => {
+      setEditorState(state);
+    };
 
     const handleClose = () => {
       setModal(false);
@@ -36,6 +47,7 @@ const Blog = () => {
       setModal(false);
       setTitle('');
       setDesc('');
+      setEditorState('');
       setCoverImage([]);
     };
 
@@ -55,13 +67,16 @@ const Blog = () => {
 
     const handleSubmit = (e) => {
 
-      if(!title || !desc || coverImage.length == 0){
+      if(!title || !desc || !editorState || coverImage.length == 0){
         switch (true) {
           case !title:
             setSubmitError("Title cannot be empty...");
             break;
           case !desc:
             setSubmitError("Description is empty...");
+            break;
+          case !editorState:
+            setSubmitError("Long Description is empty...");
             break;
           case coverImage.length == 0:
             setSubmitError("You must add a cover image...");
@@ -75,15 +90,17 @@ const Blog = () => {
 
       } else {
         e.preventDefault();
+        const long_desc = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
         const form = new FormData();
+        form.append("userId", auth.user.id);
         form.append("title", title);
         form.append("desc", desc);
+        form.append("long_desc", long_desc);
         form.append('coverImage', coverImage);
         
         dispatch(addBlog(form)).then(() => handleCloseAfterSubmit());
       }
     };
-    
     return (
       blogs.loading ? 
         <Spinner/> : 
@@ -131,6 +148,10 @@ const Blog = () => {
               label={"Description"}
               value={desc}
             />
+
+            <div style={{padding: "20px 30px"}}>
+              <Editor editorState={editorState} onEditorStateChange={handleEditorChange} />
+            </div>
 
             <div style={{padding: "20px 30px", display: "flex", flexDirection:"column", gap:"10px"}}>
               <p>Select cover photo (Select One)</p>

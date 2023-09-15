@@ -35,6 +35,11 @@
     display: flex;
     flex-flow: wrap;
 }
+.imageContainer{
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
+}
 .tagAllign{
     padding: 5px;
     display: flex;
