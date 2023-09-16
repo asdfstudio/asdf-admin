@@ -267,7 +267,7 @@ const BlogCard = ({
             <Modal
                 isOpen={editConfirmModal}
                 onClose={handleCloseEditModal}
-                heading={"Edit Portfolio"}
+                heading={"Edit Blog"}
                 positiveText={"Update"}
                 onSubmit={handleEditPortfolio}
             >

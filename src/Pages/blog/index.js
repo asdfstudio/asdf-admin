@@ -125,7 +125,7 @@ const Blog = () => {
         <Modal
             isOpen={modal}
             onClose={handleClose}
-            heading={"Create New Portfolio"}
+            heading={"Create New Blog"}
             positiveText={"Save Changes"}
             onSubmit={handleSubmit}
         >
