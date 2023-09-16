@@ -87,7 +87,7 @@ const ProjectHistory  = ({
                     }}
                   >
                     <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"20px" }}>
-                      <p>{data.desc}</p>
+                      <p className={styles["descContainer"]}>{data.desc}</p>
                       <div className={styles["tagContainer"]}>
                       {
                           data.portfolio_tags.map((tag, i) => (

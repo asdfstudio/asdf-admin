@@ -45,6 +45,15 @@
     display: flex;
     flex-flow: wrap;
 }
+.descContainer{
+  width: 400px;
+  margin: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
   /* Responsive columns */
   @media screen and (max-width: 600px) {
     .column {
@@ -54,6 +63,9 @@
       margin-bottom: -20px;
     }
     .tagContainer{
+      width: 300px;
+    }
+    .descContainer{
       width: 300px;
     }
   }
