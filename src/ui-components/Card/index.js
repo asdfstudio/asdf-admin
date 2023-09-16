@@ -233,7 +233,7 @@ const Card = ({
                 {data &&
                     <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"0px" }}>
                         <FormattedDate mysqlDateTimeString={data?.createdAt} />
-                        <p>{data?.desc}</p>
+                        <p style={{paddingTop: '10px', fontSize: '16px', maxWidth: '1200px'}}>{data?.desc}</p>
                         <div className={styles["tagContainer"]}>
                             {
                                 data.portfolio_tags?.map((tag, i) => (

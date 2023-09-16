@@ -252,11 +252,12 @@ const BlogCard = ({
                             priority
                             />
                          </div>
-
-                        <Editor
-                            editorState={editorState}
-                            readOnly={true} // Set the editor to read-only mode
-                        />
+                        <div style={{maxWidth: '800px'}}>
+                            <Editor
+                                editorState={editorState}
+                                readOnly={true} // Set the editor to read-only mode
+                            />
+                        </div>
                     </div>
                 }
             </Modal>

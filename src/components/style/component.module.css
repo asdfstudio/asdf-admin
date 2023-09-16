@@ -46,7 +46,7 @@
     flex-flow: wrap;
 }
 .descContainer{
-  width: 400px;
+  width: 300px;
   margin: 5px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
