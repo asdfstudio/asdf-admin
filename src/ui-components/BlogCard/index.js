@@ -13,8 +13,16 @@ import PopupAlert from "../PopupAlert";
 import CoverImageUpload from "../CoverImageUpload";
 import Input from "../Input";
 import { IoEyeOutline } from "react-icons/io5";
+import dynamic from 'next/dynamic';
 
-import { Editor as DraftEditor } from 'react-draft-wysiwyg';
+
+// import { Editor as DraftEditor } from 'react-draft-wysiwyg';
+const DraftEditor = dynamic(
+    () => import('react-draft-wysiwyg').then((module) => module.Editor),
+    {
+      ssr: false,
+    }
+  );
 import { Editor, EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';

@@ -11,8 +11,16 @@ import PopupAlert from '@aio/components/PopupAlert';
 import CoverImageUpload from '@aio/components/CoverImageUpload';
 import BlogHistory from 'src/components/BlogHistory';
 import { useDispatch } from 'react-redux';
+import dynamic from 'next/dynamic';
 
-import { Editor } from 'react-draft-wysiwyg';
+
+// import { Editor } from 'react-draft-wysiwyg';
+const Editor = dynamic(
+  () => import('react-draft-wysiwyg').then((module) => module.Editor),
+  {
+    ssr: false,
+  }
+);
 import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
