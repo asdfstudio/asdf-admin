@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import Card from "@aio/components/Card";
-
 import styles from "../components/style/component.module.css"
 import { SlCalender } from "react-icons/sl";
 import Image from "next/image";
-import Tag from "@aio/components/Tag";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import FormattedDate from "./FormattedDate";
@@ -12,10 +9,11 @@ import { BASE_IMAGE_URL } from "urlConfig";
 import { updatedSortedPortfolio } from "src/actions";
 import { useDispatch } from "react-redux";
 import ActionButton from "@aio/components/ActionButton";
+import BlogCard from "@aio/components/BlogCard";
 
 const baseImageURL = BASE_IMAGE_URL;
 
-const ProjectHistory  = ({
+const BlogHistory  = ({
   data=[]
 }) => {
   const dispatch = useDispatch();
@@ -63,7 +61,13 @@ const ProjectHistory  = ({
               </div>
               <div className={styles["column"]}>
               { itemList.map((data, i) => (
-                <Draggable key={data.id} draggableId={data.id} index={i} isDragDisabled={anyModal}>
+                <Draggable 
+                  key={data.id} 
+                  draggableId={data.id} 
+                  index={i} 
+                  // isDragDisabled={anyModal}
+                  isDragDisabled={true}
+                >
                 {(provided) => (
                 <div
                   key={i} 
@@ -71,8 +75,8 @@ const ProjectHistory  = ({
                   {...provided.dragHandleProps}
                   {...provided.draggableProps}
                 >
-                  <Card
-                    heading={data.name}
+                  <BlogCard
+                    heading={data.title}
                     data={data}
                     isAnyModalOpen={isAnyModalOpenHandle}
                     footerLeft={() => {
@@ -80,40 +84,29 @@ const ProjectHistory  = ({
                         <div className={styles["date-placeholder"]}>
                           <SlCalender />
                           <p className="ml-5">
-                            <FormattedDate mysqlDateTimeString={data?.createdAt} />
+                            <FormattedDate mysqlDateTimeString={data?.upload_time} />
+                            {/* {data?.upload_time} */}
                           </p>
                         </div>
                       );
                     }}
                   >
                     <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"20px" }}>
-                      <p className={styles["descContainer"]}>{data.desc}</p>
-                      <div className={styles["tagContainer"]}>
-                      {
-                          data.portfolio_tags.map((tag, i) => (
-                            <div className={styles["tagAllign"]} key={i}>
-                              <Tag
-                                label={tag.tag}
-                                inverse={true}
-                              />
-                            </div>
-                          ))
-                        }
-                      </div>
+                    <p className={styles["descContainer"]}>{data.desc}</p>
                       <div className={styles["imageContainer"]}>
                         <Image 
                           // src={`/`+data.coverImage}
                           src={`${baseImageURL}${data.coverImage}`}
                           alt={data.coverImage}
-                          width={400}
-                          height={350}
-                          sizes="100vw"
+                          width={300}
+                          height={250}
+                          sizes="50vw"
                           style={{ borderRadius: 10, objectFit: "cover"}}
                           priority
                         />
                       </div>
                     </div>
-                  </Card>
+                  </BlogCard>
                 </div>
               )}
             </Draggable>
@@ -128,4 +121,4 @@ const ProjectHistory  = ({
   );
 };
 
-export default ProjectHistory;
+export default BlogHistory;

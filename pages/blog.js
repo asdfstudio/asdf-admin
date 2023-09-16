@@ -1,18 +1,18 @@
 import React from "react";
 import Layout from "../src/ui-components/layout";
-import Portfolio from "../src/Pages/portfolio";
 import PrivateContent from "src/components/PrivateContent";
+import Blog from "src/Pages/blog";
 
-const PortfolioPage = () => {
+const BlogPage = () => {
   return (
     <PrivateContent>
       <Layout>
-        <Portfolio />
+        <Blog />
       </Layout>
     </PrivateContent>
   );
 };
 
-PortfolioPage.displayName = "PortfolioPage";
+BlogPage.displayName = "BlogPage";
 
-export default PortfolioPage
+export default BlogPage
