@@ -9,7 +9,7 @@ import styles from "./Header.module.css";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import Link from "next/link";
 import { headerLoginMenuList, menuList } from "../../data";
-import { FiUser } from "react-icons/fi";
+import { FiLogOut, FiUser } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "src/actions/auth.action";
 import { useRouter } from "next/router";
@@ -79,6 +79,7 @@ const submitLogout = async (e) => {
     console.error('Error during login:', error);
   }
 };
+
   return (
     <section className={styles.container}>
       <div className={styles["left-items"]}>
@@ -99,29 +100,26 @@ const submitLogout = async (e) => {
           <li>
             {/* User Dropdown Menu */}
             <DropdownMenu
-              label={"Dropdown 1"}
               CustomMenu={UserIcon}
-              dropdownContainerStyle={
-                {
-                  // padding: '15px 0'
-                }
-              }
             >
+              <div>
               <ul className={styles["dropdown-menu"]}>
                 <li>
                   <Link href={'/profile'} className={styles["link"]}>
-                    {FiUser}
+                    <FiUser/>
                     <span>Profile</span>
                   </Link>
                 </li>
                 <li>
                   <div onClick={submitLogout} className={styles["link"]}>
-                    {FiUser}
+                    <FiLogOut/>
                     <span>Logout</span>
                   </div>
                 </li>
               </ul>
+              </div>
             </DropdownMenu>
+            <DropdownMenu/>
           </li>
         </ul>
       </div>

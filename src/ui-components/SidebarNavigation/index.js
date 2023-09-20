@@ -3,14 +3,16 @@ import styles from "./SidebarNavigation.module.css";
 import Link from "next/link";
 import routes from "../../routes";
 import { useRouter } from "next/router";
-import { TbLogout } from "react-icons/tb";
+import { TbDeviceIpadMinus, TbLogout } from "react-icons/tb";
 import { BiChevronLeft } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 const SidebarNavigation = ({
   sidebarMenuActive,
   toggleSidebarMenu
 }) => {
   const router = useRouter();
+  const role = useSelector(state => state.auth.user.role);
   
   return (
     <section className={`${styles.container} ${sidebarMenuActive ? styles['active'] : ''}`}>
@@ -32,13 +34,14 @@ const SidebarNavigation = ({
           ))} 
       </ul>
 
-      {/* <ul className={styles["sidebar-footer"]}>
+      <ul className={styles["sidebar-footer"]}>
           <li className={styles["footer-item"]}> 
-            <TbLogout />
-            <span>Logouts</span>
+            <TbDeviceIpadMinus/>
+            <span>Role:</span>
+            <span style={{textTransform:'capitalize'}}>{role}</span>
           </li>
           
-      </ul> */}
+      </ul>
     </section>
   );
 };

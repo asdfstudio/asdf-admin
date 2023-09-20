@@ -22,7 +22,8 @@ export default (state = initialState, action) => {
         case productConstants.ADD_PORTFOLIO_FAILURE:
             state = {
                 ...state,
-                loading: false
+                loading: false,
+                error: action.payload.error,
             }
             break;
         case productConstants.UPDATE_PORTFOLIO_REQUEST:

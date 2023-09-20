@@ -7,7 +7,7 @@ import { useEffect } from "react";
 const PopupAlert = ({ message, onClose, color="black" }) => {
 
     const [timer, setTimer] = useState(true);
-    const duration = 2000;
+    const duration = 3000;
   
     useEffect(() => {
       if (timer) {

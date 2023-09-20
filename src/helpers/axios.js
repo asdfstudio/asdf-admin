@@ -2,30 +2,27 @@ import axios from 'axios';
 import store from '../store';
 import { authConstants } from '../actions/constants';
 
-// let { token } = window.localStorage.getItem('token');
-const { auth } = store.getState();
-const axiosIntance = axios.create({
-    headers: {
-        'Authorization': auth.token ? `Bearer ${auth.token}` : ''
-    }
+const axiosInstance = axios.create();
+
+axiosInstance.interceptors.request.use((req) => {
+  const { auth } = store.getState(); // Fetch auth from the Redux store on each request
+  if (auth.token) {
+    req.headers.Authorization = `Bearer ${auth.token}`;
+  }
+  return req;
 });
 
-axiosIntance.interceptors.request.use((req) => {
-    if(auth.token){
-        req.headers.Authorization = `Bearer ${auth.token}`;
-    }
-    return req;
-})
-
-axiosIntance.interceptors.response.use((res) => {
-    return res;
-}, (error) => {
+axiosInstance.interceptors.response.use(
+  (res) => res,
+  (error) => {
     const status = error.response ? error.response.status : 500;
-    if(status && status === 500){
-        localStorage.clear();
-        store.dispatch({ type: authConstants.LOGOUT_SUCCESS });
+    if (status && status === 500) {
+      localStorage.clear();
+      store.dispatch({ type: authConstants.LOGOUT_SUCCESS });
     }
     return Promise.reject(error);
-})
+  }
+);
 
-export default axiosIntance;
+export default axiosInstance;
+

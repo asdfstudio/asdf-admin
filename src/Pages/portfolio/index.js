@@ -29,7 +29,10 @@ const Portfolio = () => {
     const [portfolio_images, setPortfolio_images] = useState([]);
 
     const [showAlert, setShowAlert] = useState(false);
+    const [showAlertAfter, setShowAlertAfter] = useState(false);
     const [submitError, setSubmitError] = useState("");
+
+    const profileError = useSelector(state => state.portfolio?.error);
 
     useEffect(() => {
       getPortfolios();
@@ -70,9 +73,16 @@ const Portfolio = () => {
     const handleShowAlert = () => {
       setShowAlert(true);
     };
+
+    const handleShowAlertAfter = () => {
+      setShowAlertAfter(true);
+    };
   
     const handleCloseAlert = () => {
       setShowAlert(false);
+    };
+    const handleCloseAlertAfter = () => {
+      setShowAlertAfter(false);
     };
 
     const handleSubmit = (e) => {
@@ -96,7 +106,7 @@ const Portfolio = () => {
             break;
         }
 
-        handleShowAlert();
+        handleShowAlert(); 
 
       } else {
         e.preventDefault();
@@ -108,8 +118,14 @@ const Portfolio = () => {
         const imagestag = {
           tags: portfolio_tags.map(tag => (tag.label ))
         };
-        
-        dispatch(addPortfolio(form, portfolio_images, imagestag.tags)).then(() => handleCloseAfterSubmit());
+
+        dispatch(addPortfolio(form, portfolio_images, portfolio_tags))
+        .then(() => {
+          handleCloseAfterSubmit();
+        });
+
+        {profileError && handleShowAlertAfter()}
+
       }
     };
     
@@ -133,6 +149,16 @@ const Portfolio = () => {
           // data={table_data_api} 
           data={portfolios.portfolios} 
         />
+
+        {
+          showAlertAfter && (
+            <PopupAlert
+              message={profileError}
+              onClose={handleCloseAlertAfter}
+              color="red"
+            />
+          )
+        }
 
         <Modal
             isOpen={modal}

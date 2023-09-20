@@ -1,6 +1,6 @@
-// import axios from "axios";
+import axios from "axios";
 import { authConstants } from "./constants";
-import axios from "../helpers/axios";
+// import axios from "../helpers/axios";
 import { API } from "urlConfig";
 
 const baseURL = API;

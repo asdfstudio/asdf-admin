@@ -36,11 +36,26 @@ export const addPortfolio = (form, portfolio_images, portfolio_tags) => {
         dispatch({ type: productConstants.ADD_PORTFOLIO_SUCCESS });
         dispatch(addPortfolioImages(portfolioId, portfolio_images));
         dispatch(addPortfolioTags(portfolioId, portfolio_tags));
-      } else {
-        dispatch({ type: productConstants.ADD_PORTFOLIO_FAILURE });
       }
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        if (error.response.status === 400 || error.response.status === 403) {
+          
+          const { message } = error.response.data;
+
+          dispatch({ type: productConstants.ADD_PORTFOLIO_FAILURE, payload: { error: message } });
+
+        } else {
+
+          dispatch({ type: productConstants.ADD_PORTFOLIO_FAILURE, error: 'An error occurred while processing your request.' });
+        }
+      } else if (error.request) {
+
+        dispatch({ type: productConstants.ADD_PORTFOLIO_FAILURE, error: 'Network error. Please check your internet connection.' });
+      } else {
+
+        dispatch({ type: productConstants.ADD_PORTFOLIO_FAILURE, error: 'An error occurred while processing your request.' });
+      }
     }
   };
 };

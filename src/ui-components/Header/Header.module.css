@@ -44,6 +44,7 @@
 }
 .dropdown-menu li:hover{
     background-color: rgba(128, 128, 128, 0.137);
+    border-radius: 10%;
 }
 .dropdown-menu li span{
     margin-left: 10px;
@@ -125,6 +126,8 @@
 .link{
     display: block;
     width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .left-items > ul{
