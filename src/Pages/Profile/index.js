@@ -89,7 +89,10 @@ const Profile = (props) => {
                         />
                     </form>
                     <div className={styles["button-container"]}>
-                        <InlineButton onClick={handleSubmit} label={"Update"} />
+                        <InlineButton 
+                            onClick={handleSubmit} 
+                            label={`${auth.loading ? "Loading..." : "Update"}`} 
+                        />
                     </div>
                 </div>
             </section>
@@ -133,7 +136,10 @@ const Profile = (props) => {
                         />
                         <div className={styles["button-container"]}>
                             <p style={{color:"red"}}>{passValidation}</p>
-                            <InlineButton onClick={handlePassSubmit} label={"Change"} />
+                            <InlineButton 
+                                onClick={handlePassSubmit} 
+                                label={`${auth.loading ? "Loading..." : "Change"}`}  
+                            />
                         </div>
                     </form>
                 </div>

@@ -89,10 +89,30 @@ export default (state = initState, action) => {
             loading: false
         }
         break;
+        case authConstants.UPDATE_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
         case authConstants.UPDATE_SUCCESS:
             state = {
                 ...state,
                 user: action.payload.user,
+                loading: false
+            }
+            break;
+        case authConstants.UPDATE_FAILURE:
+            state = {
+                ...state,
+                loading: false
+            }
+            break;
+
+        case authConstants.UPDATE_PASSWORD_REQUEST:
+            state = {
+                ...state,
+                loading: true
             }
             break;
 
@@ -100,6 +120,7 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 error: action.payload.error,
+                loading: false
             }
             break;
 

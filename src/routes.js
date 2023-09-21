@@ -1,6 +1,6 @@
 import { IoAlbumsOutline, IoGridOutline } from "react-icons/io5";
 import { BsSpeedometer2 } from "react-icons/bs";
-import { BiUserCircle } from "react-icons/bi";
+import { BiUserCircle, BiUserPlus } from "react-icons/bi";
 import { AiOutlineBarChart } from "react-icons/ai";
 
 export default [
@@ -23,6 +23,11 @@ export default [
         to: '/profile',
         name: 'Profile',
         Icon: BiUserCircle
+    },
+    {
+        to: '/user',
+        name: 'User',
+        Icon: BiUserPlus
     },
     {
         to: '/statistics',
