@@ -6,35 +6,33 @@ import { API } from "urlConfig";
 const baseURL = API;
 
 export const login = (user) => {
-
     return async (dispatch) => {
-
+      try {
         dispatch({ type: authConstants.LOGIN_REQUEST });
-        const res = await axios.post(`${baseURL}/login`, {
-            ...user
-        });
-
-        if(res.status === 200){
-            const { token, user } = res.data;
-            localStorage.setItem('token', token);
-            localStorage.setItem('user', JSON.stringify(user));
+        const res = await axios.post(`${baseURL}login`, user);
+  
+        if (res.status === 200) {
+          localStorage.setItem('token', res.data.token);
+          localStorage.setItem('user', JSON.stringify(res.data.user));
+          dispatch({
+            type: authConstants.LOGIN_SUCCESS,
+            payload: {
+              token: res.data.token,
+              user: res.data.user,
+            },
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+            const { message } = error.response.data;
             dispatch({
-                type: authConstants.LOGIN_SUCCESS,
-                payload: {
-                    token, user
-                }
+              type: authConstants.LOGIN_FAILURE,
+              payload: { message },
             });
-        }
-        else{
-            if(res.status === 400){
-                dispatch({
-                    type: authConstants.LOGIN_FAILURE,
-                    payload: { error: res.data.message }
-                });
-            }
-        }
-    }
-}
+          }
+      }
+    };
+  };
 
 export const updateUser = (user) => {
 
@@ -91,25 +89,24 @@ export const updatePassword = (password) => {
 }
 
 export const signup = (user) => {
-
     return async (dispatch) => {
+        try {
+            dispatch({ type: authConstants.SIGNUP_REQUEST });
+            const res = await axios.post(`${baseURL}signup`, user);
 
-        dispatch({ type: authConstants.SIGNUP_REQUEST });
-        const res = await axios.post(`${baseURL}/signup`, {
-            ...user
-        });
-
-        if(res.status === 201){
-            const { message } = res.data;
-            dispatch({
-                type: authConstants.SIGNUP_SUCCESS,
-                payload: {message}
-            });
-        }else{
-            if(res.status === 400){
+            if(res.status === 201){
+                const { message } = res.data;
+                dispatch({
+                    type: authConstants.SIGNUP_SUCCESS,
+                    payload: {message}
+                });
+            }
+        } catch (error) {
+            if (error.response.status === 400) {
+                const { message } = error.response.data;
                 dispatch({
                     type: authConstants.SIGNUP_FAILURE,
-                    payload: { error: res.data.error }
+                    payload: { message },
                 });
             }
         }

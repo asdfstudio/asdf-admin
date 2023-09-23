@@ -36,13 +36,13 @@ export default (state = initState, action) => {
         case authConstants.LOGIN_FAILURE:
         state = {
             ...state,
-            error: action.payload.error,
+            error: action.payload.message,
             loading: false
         }
         case authConstants.LOGIN_AUTH_FAILURE:
         state = {
             ...state,
-            error: action.payload.error,
+            // error: action.payload.error,
             loading: false
         }
         break;
@@ -85,7 +85,7 @@ export default (state = initState, action) => {
         case authConstants.SIGNUP_FAILURE:
         state = {
             ...state,
-            error: action.payload.error,
+            error: action.payload.message,
             loading: false
         }
         break;

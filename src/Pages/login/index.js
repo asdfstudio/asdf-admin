@@ -54,8 +54,8 @@ const Login = (props) => {
   };
 
   return (
-    // auth.loading === true ? 
-    //   <Spinner/> :
+    auth.loading === true ? 
+      <Spinner/> :
       <div className={styles.container}>
         <section className={styles["login-container"]}>
           <div className={styles["brand-container"]}>

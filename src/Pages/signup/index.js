@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signup } from "src/actions/auth.action";
 import { useRouter } from "next/router";
 import PopupAlert from "@aio/components/PopupAlert";
+import Spinner from "@aio/components/Spinner";
 
 const Signup = () => {
 
@@ -46,13 +47,15 @@ const Signup = () => {
 
     try {
       await dispatch(signup(user));
-        router.push('/login');
+        // router.push('/login');
     } catch (error) {
         console.error('Error during signup:', error);
     }
   };
 
   return (
+    auth.loading === true ? 
+    <Spinner/> :
       <div className={styles.container}>
         <section className={styles["login-container"]}>
           <div className={styles["brand-container"]}>
@@ -106,13 +109,14 @@ const Signup = () => {
                 label={"Re-type Password"}
                 value={retypePassword}
               />
-              <FullButton label={"Login"} />
+              <FullButton label={"Signup"} />
 
               {
                 showAlert && (
                   <PopupAlert
                     message={loginError}
                     onClose={handleCloseAlert}
+                    color="red"
                   />
                 )
               }
