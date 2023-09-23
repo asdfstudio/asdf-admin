@@ -14,6 +14,8 @@ const User = () => {
     const auth = useSelector(state => state.auth);
     const users = useSelector(state => state.user);
     const filteredUsers = users.users.filter(user => user.id !== auth.user.id);
+    const userRoleUsers = filteredUsers.filter(user => user.role === 'user');
+    const adminRoleUsers = filteredUsers.filter(user => ['admin', 'superAdmin'].includes(user.role));
     const [modal, setModal] = useState(false);
 
     const [title, setTitle] = useState("");
@@ -55,20 +57,33 @@ const User = () => {
         <Spinner/> : 
         users.loading ? <Spinner /> : 
         <>
-        <HeaderSection
-            heading={"User"}
-            subHeading={"User with Admin role"}
-            rightItem={() => (
-              <ActionButton
-                  onClick={() => setModal(true)}
-                  Icon={AiOutlinePlusCircle}
-                  label="User"
-              />
-            )}
-        />
-        <UserHistory
-          data={filteredUsers} 
-        />
+        <section>
+          <HeaderSection
+              heading={"Admin"}
+              subHeading={"Super Admin & Admin list"}
+          />
+          <UserHistory
+            data={adminRoleUsers} 
+          />
+        </section>
+
+        <section>
+          <HeaderSection
+              heading={"User"}
+              subHeading={"User's application list"}
+              rightItem={() => (
+                <ActionButton
+                    onClick={() => setModal(true)}
+                    Icon={AiOutlinePlusCircle}
+                    label="User"
+                />
+              )}
+          />
+          <UserHistory
+            data={userRoleUsers} 
+          />
+          
+        </section>
 
         <Modal
             isOpen={modal}

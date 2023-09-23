@@ -4,7 +4,7 @@ import { API } from "urlConfig";
 
 const baseURL = API;
 
-export const getUsers = (userId) => {
+export const getUsers = () => {
   return async (dispatch) => {
     try {
       dispatch({ type: userConstants.GET_ALL_USERS_REQUEST });
@@ -24,36 +24,59 @@ export const getUsers = (userId) => {
   };
 };
 
-export const promoteUser = (form) => {
+export const promoteUser = (payload) => {
   return async (dispatch) => {
     try {
       dispatch({ type: userConstants.PROMOTE_USER_REQUEST });
-      const res = await axios.post(`${baseURL}user/promoteToAdmin`, form);
-      if (res.status === 200) {
-        dispatch({ type: userConstants.PROMOTE_USER_SUCCESS });
-        dispatch(getUsers());
+
+      if(payload.newRole == 'superAdmin')
+      {
+        const res = await axios.post(`${baseURL}user/promoteToSuperAdmin`, payload);
+        if (res.status === 200) {
+          dispatch({ type: userConstants.PROMOTE_USER_SUCCESS });
+          dispatch(getUsers());
+        }
       } else {
-        dispatch({ type: userConstants.PROMOTE_USER_FAILURE });
+        const res = await axios.post(`${baseURL}user/promoteToAdmin`, payload);
+        if (res.status === 200) {
+          dispatch({ type: userConstants.PROMOTE_USER_SUCCESS });
+          dispatch(getUsers());
+        }
       }
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        if (error.response.status === 400 || error.response.status === 403) {
+          
+          const { message } = error.response.data;
+
+          dispatch({ type: userConstants.PROMOTE_USER_FAILURE, payload: { error: message } });
+
+        } else {
+
+          dispatch({ type: userConstants.PROMOTE_USER_FAILURE, error: 'An error occurred while processing your request.' });
+        }
+      } else if (error.request) {
+
+        dispatch({ type: userConstants.PROMOTE_USER_FAILURE, error: 'Network error. Please check your internet connection.' });
+      } else {
+
+        dispatch({ type: userConstants.PROMOTE_USER_FAILURE, error: 'An error occurred while processing your request.' });
+      }
     }
   };
 };
 
-
-// new action
-export const deleteUserById = (blogId) => {
+export const deleteUserById = (userId) => {
   return async (dispatch) => {
     try {
       const res = await axios.delete(`${baseURL}user/deleteUserById`, {
-        data: { blogId },
+        data: { userId },
       });
       dispatch({ type: userConstants.DELETE_USER_BY_ID_REQUEST });
       if (res.status === 200) {
         dispatch({ 
           type: userConstants.DELETE_USER_BY_ID_SUCCESS,
-          payload: { blogId },
+          payload: { userId },
         });
         dispatch(getUsers());
       } else {

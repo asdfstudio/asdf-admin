@@ -5,7 +5,7 @@ import { authConstants } from '../actions/constants';
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use((req) => {
-  const { auth } = store.getState(); // Fetch auth from the Redux store on each request
+  const { auth } = store.getState();
   if (auth.token) {
     req.headers.Authorization = `Bearer ${auth.token}`;
   }

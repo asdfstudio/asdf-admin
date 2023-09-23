@@ -3,6 +3,7 @@ import { userConstants } from "../actions/constants";
 const initialState = {
     users: [],
     loading: false,
+    error: null,
 };
 
 export default (state = initialState, action) => {
@@ -42,7 +43,8 @@ export default (state = initialState, action) => {
         case userConstants.PROMOTE_USER_FAILURE:
             state = {
                 ...state,
-                loading: false
+                loading: false,
+                error: action.payload.error,
             }
             break;
             

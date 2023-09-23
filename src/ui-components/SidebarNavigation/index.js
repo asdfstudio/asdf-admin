@@ -3,8 +3,7 @@ import styles from "./SidebarNavigation.module.css";
 import Link from "next/link";
 import routes from "../../routes";
 import { useRouter } from "next/router";
-import { TbDeviceIpadMinus, TbLogout } from "react-icons/tb";
-import { BiChevronLeft } from "react-icons/bi";
+import { TbSettings2 } from "react-icons/tb";
 import { useSelector } from "react-redux";
 
 const SidebarNavigation = ({
@@ -36,7 +35,7 @@ const SidebarNavigation = ({
 
       <ul className={styles["sidebar-footer"]}>
           <li className={styles["footer-item"]}> 
-            <TbDeviceIpadMinus/>
+            <TbSettings2/>
             <span>Role:</span>
             <span style={{textTransform:'capitalize'}}>{role}</span>
           </li>
