@@ -4,15 +4,15 @@ import PrivateContent from "src/components/PrivateContent";
 import UserWaitingPage from "src/Pages/userWaitingPage";
 
 export default function Home() {
-  const authRole = useSelector(state => state.auth.user.role);
+  const authRole = useSelector(state => state.auth?.user?.role);
 
   if(authRole == 'user'){
-    return <UserWaitingPage/>;
+    return <UserWaitingPage/>
   }else {
     return (
       <PrivateContent>
           <Dashboard />
       </PrivateContent>
-    );
+    )
   }
 }

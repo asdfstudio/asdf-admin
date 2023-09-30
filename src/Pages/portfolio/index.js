@@ -99,7 +99,7 @@ const Portfolio = () => {
             setSubmitError("Please select any tag to continue...");
             break;
           case coverImage.length == 0:
-            setSubmitError("You must add a cover image...");
+            setSubmitError("You must need to add a cover image...");
             break;
           default:
             setSubmitError("Fill the from properly");

@@ -13,8 +13,6 @@ import BlogHistory from 'src/components/BlogHistory';
 import { useDispatch } from 'react-redux';
 import dynamic from 'next/dynamic';
 
-
-// import { Editor } from 'react-draft-wysiwyg';
 const Editor = dynamic(
   () => import('react-draft-wysiwyg').then((module) => module.Editor),
   {
@@ -87,7 +85,7 @@ const Blog = () => {
             setSubmitError("Long Description is empty...");
             break;
           case coverImage.length == 0:
-            setSubmitError("You must add a cover image...");
+            setSubmitError("You must need to add a cover image...");
             break;
           default:
             setSubmitError("Fill the from properly");

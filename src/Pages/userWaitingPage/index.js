@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "@aio/components/Logo";
 import styles from "./login.module.css";
+import { IoTime } from "react-icons/io5";
 
 const UserWaitingPage = (props) => {
 
@@ -16,7 +17,7 @@ const UserWaitingPage = (props) => {
               <div className={styles["sm-brand-container"]}>
                 <Logo />
               </div>
-              <h1>Waiting lobby</h1>
+              <h1>Waiting lobby <IoTime/></h1>
               <p style={{paddingTop:'10px'}}>Your request has not been approved yet</p>
             </div>
             <p className="tc-grey t-center">

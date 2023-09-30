@@ -39,17 +39,15 @@ const Signup = () => {
       name, email, password, retypePassword
   }
 
-    // signup(user);
-
-    {
-      loginError && handleShowAlert() 
-    }
-
-    try {
-      await dispatch(signup(user));
+    if (!loginError) {
+      try {
+        await dispatch(signup(user));
         router.push('/login');
-    } catch (error) {
+      } catch (error) {
         console.error('Error during signup:', error);
+      }
+    } else {
+      handleShowAlert();
     }
   };
 

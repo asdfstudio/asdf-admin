@@ -69,7 +69,7 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 authenticating: true,
-                loading: true
+                loading: true,
             }
             break;
         case authConstants.SIGNUP_SUCCESS:
@@ -79,7 +79,8 @@ export default (state = initState, action) => {
                 token: action.payload.token,
                 message: action.payload.message,
                 authenticate: true,
-                authenticating: false
+                authenticating: false,
+                loading: false,
             }
             break;
         case authConstants.SIGNUP_FAILURE:
