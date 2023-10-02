@@ -106,6 +106,11 @@ const Login = (props) => {
               {/* <button type="submit" className={styles['btn-style']}>label</button> */}
 
               <p className="tc-grey t-center">
+                Forgot Password?{" "}
+                <Link className="link" href={`/forgotPassword`}>Reset</Link>
+              </p>
+
+              <p className="tc-grey t-center">
                 Dont have an account?{" "}
                 <Link className="link" href={`/signup`}>Signup for free</Link>
               </p>

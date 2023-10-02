@@ -93,3 +93,57 @@ export const deleteUserById = (userId) => {
     }
   };
 };
+
+export const forgotPassword = (email) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.post(`${baseURL}user/forgot-password`, {
+        email
+      });
+      dispatch({ type: userConstants.FOTGOT_PASSWORD_REQUEST });
+      if (res.status === 200) {
+        const { message } = res.data;
+        dispatch({ 
+          type: userConstants.FOTGOT_PASSWORD_SUCCESS,
+          payload: { message },
+        });
+      }
+    } catch (error) {
+      if (error.response.status === 400) {
+        const { message } = error.response.data;
+        dispatch({
+          type: userConstants.FOTGOT_PASSWORD_FAILURE,
+          payload: { message },
+        });
+      } else {
+        console.log("Error")
+      }
+    }
+  };
+};
+
+export const resetPassword = (token, password) => {
+  return async (dispatch) => {
+    dispatch({ type: userConstants.RESET_PASSWORD_REQUEST });
+    try {
+      const res = await axios.post(`${baseURL}user/reset-password`, {
+        token, password
+      });
+      if (res.status === 200) {
+        const { message } = res.data;
+        dispatch({ 
+          type: userConstants.RESET_PASSWORD_SUCCESS,
+          payload: { message },
+        });
+      }
+    } catch (error) {
+      if (error.response.status === 400) {
+        const { message } = error.response.data;
+        dispatch({
+          type: userConstants.RESET_PASSWORD_FAILURE,
+          payload: { message },
+        });
+      }
+    }
+  };
+};

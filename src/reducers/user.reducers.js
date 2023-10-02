@@ -4,6 +4,8 @@ const initialState = {
     users: [],
     loading: false,
     error: null,
+    message: null,
+    sendEmail:false,
 };
 
 export default (state = initialState, action) => {
@@ -65,6 +67,50 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 loading: false
+            }
+            break;
+
+        case userConstants.FOTGOT_PASSWORD_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case userConstants.FOTGOT_PASSWORD_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                message: action.payload.message,
+                sendEmail: true
+            }
+            break;
+        case userConstants.FOTGOT_PASSWORD_FAILURE:
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.message,
+            }
+            break;
+
+        case userConstants.RESET_PASSWORD_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case userConstants.RESET_PASSWORD_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                message: action.payload.message,
+                sendEmail: true
+            }
+            break;
+        case userConstants.RESET_PASSWORD_FAILURE:
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.message,
             }
             break;
     }
