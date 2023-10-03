@@ -10,7 +10,8 @@ const initState = {
     authenticating: false,
     loading: false,
     error: null,
-    message: ''
+    message: '',
+    count: 0
 };
 
 export default (state = initState, action) => {
@@ -124,7 +125,24 @@ export default (state = initState, action) => {
                 loading: false
             }
             break;
-
+        case authConstants.VISITOR_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            }
+            break;
+        case authConstants.VISITOR_SUCCESS:
+            state = {
+                ...state,
+                count: action.payload.count,
+                loading: false
+            }
+            break;
+        case authConstants.VISITOR_FAILURE:
+            state = {
+                ...state,
+                loading: false
+            }
     }
 
 

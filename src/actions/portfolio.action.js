@@ -8,7 +8,7 @@ export const getPortfolios = () => {
   return async (dispatch) => {
     try {
       dispatch({ type: productConstants.GET_ALL_PORTFOLIOS_REQUEST });
-      const res = await axios.get(`${baseURL}portfolio/getPortfolios`);
+      const res = await axios.get(`${baseURL}admin/portfolio/getPortfolios`);
 
       if (res.status === 200) {
         const { portfolios } = res.data;

@@ -57,8 +57,8 @@ export default function Dashboard() {
       <Section>
         <DataCard
           label={"Total Visiter's"}
-          value={"Need to develop"}
-          percentageValue={0}
+          value={auth.count}
+          // percentageValue={auth.count}
           inverse={true}
         />
         <Link href={"/portfolio"}>
