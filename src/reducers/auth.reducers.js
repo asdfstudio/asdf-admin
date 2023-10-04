@@ -11,7 +11,7 @@ const initState = {
     loading: false,
     error: null,
     message: '',
-    count: 0
+    visitor: [],
 };
 
 export default (state = initState, action) => {
@@ -134,7 +134,7 @@ export default (state = initState, action) => {
         case authConstants.VISITOR_SUCCESS:
             state = {
                 ...state,
-                count: action.payload.count,
+                visitor: action.payload.visitor,
                 loading: false
             }
             break;

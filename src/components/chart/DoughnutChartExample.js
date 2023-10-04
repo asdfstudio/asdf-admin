@@ -7,7 +7,7 @@ const DoughnutChartExample = (props) => {
 
   const createDoughnutChart = (el) => {
     const data = {
-      labels: ["Red", "Blue", "Yellow"],
+      labels: ["Portfolio 1", "Portfolio 2", "Portfolio 3"],
       datasets: [
         {
           label: "My First Dataset",
@@ -38,16 +38,7 @@ const DoughnutChartExample = (props) => {
   }, []);
 
   return (
-    <div
-      className="chart-container"
-      style={{
-        position: "relative", 
-        height: "200px", 
-        width: "200px"
-    }}
-    >
       <canvas ref={chartRef}></canvas>
-    </div>
   );
 };
 

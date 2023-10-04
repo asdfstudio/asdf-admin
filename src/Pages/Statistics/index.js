@@ -1,5 +1,5 @@
-import BarChartExample from "../../components/BarChartExample";
-import DoughnutChartExample from "../../components/DoughnutChartExample";
+import BarChartExample from "../../components/chart/BarChartExample";
+import DoughnutChartExample from "../../components/chart/DoughnutChartExample";
 import Card from "@aio/components/Card";
 import HeaderSection from "@aio/components/HeaderSection";
 import Section from "@aio/components/Section";

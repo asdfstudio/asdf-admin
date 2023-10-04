@@ -1,195 +1,141 @@
-import { useEffect, useRef, useState } from "react";
 import Card from "@aio/components/Card";
-import Modal from "@aio/components/Modal";
 import styles from "./Home.module.css";
 
-import DoughnutChartExample from "../../components/DoughnutChartExample";
 import HeaderSection from "@aio/components/HeaderSection";
 import DataCard from "@aio/components/DataCard";
-import { SlCalender } from "react-icons/sl";
-import ActionButton from "@aio/components/ActionButton";
-import { AiOutlinePlusCircle } from "react-icons/ai";
 import Section from "@aio/components/Section";
 
-import BillingHistory from "../../components/ProjectHistory";
-import Paragraph from "../../components/Paragraph";
-import BarChartExample from "../../components/BarChartExample";
-import Input from "@aio/components/Input";
+import DoughnutChartExample from "../../components/chart/DoughnutChartExample";
+import BarChartExample from "../../components/chart/BarChartExample";
+
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { 
+  getLast12MonthsVisitors, 
+  getLast7DaysVisitors, 
+  getMonthlyVisitorCount, 
+  getTodayVisitorCount, 
+  getWeeklyVisitorCount 
+} from "src/selector";
+import RadarChart from "src/components/chart/RadarChart";
+import LineChart from "src/components/chart/LineChart";
+import SectionLarge from "@aio/components/SectionLarge";
 
 export default function Dashboard() {
   const auth = useSelector(state => state.auth);
+  const visitor = useSelector(state => state.auth.visitor);
   const portfolios = useSelector(state => state.portfolio);
-  const [modal, setModal] = useState(false);
 
   const totalPortfolios = portfolios.portfolios.length;
-
-  const handleClose = () => {
-    //alert('closing');
-    setModal(false);
-  };
-
-  const handleCancel = () => {
-    setModal(false);
-  }
-
-  const handleSubmit = () => {
-    alert('Submit is working..!');
-    handleClose();
-  }
   const role = auth.user.role;
   const upperRole = role.toUpperCase();
+
+  const todayVisitorCount = useSelector(getTodayVisitorCount);
+  const weeklyVisitorCount = useSelector(getWeeklyVisitorCount);
+  const monthlyVisitorCount = useSelector(getMonthlyVisitorCount);
+  const Last7DaysVisitors = useSelector(getLast7DaysVisitors);
+  const Last12MonthsVisitors = useSelector(getLast12MonthsVisitors);
+  
   return (
     <>
       <HeaderSection
         heading={`${upperRole}'s, Dashboard`}
         subHeading={`Hello, ${auth.user.name}. Welcome to airlyStudio.`}
-        // rightItem={() => (
-        //   <ActionButton
-        //     onClick={() => setModal(true)}
-        //     Icon={AiOutlinePlusCircle}
-        //     label="Add New Portfolio"
-        //   />
-        // )}
       />
 
       <Section>
         <DataCard
-          label={"Total Visiter's"}
-          value={auth.count}
-          // percentageValue={auth.count}
+          label={"Total Visitor's"}
+          value={visitor[0]?.count}
           inverse={true}
         />
+        <DataCard
+          label={"Today's Visitor"}
+          value={todayVisitorCount.count}
+          sideLable={todayVisitorCount.dayName}
+        />
+        <DataCard
+          label={"Weekly Visitor"}
+          value={weeklyVisitorCount.count}
+          sideLable={`Week: ` + weeklyVisitorCount.weekNumber}
+        />
+        <DataCard
+          label={"Monthly Visitor"}
+          value={monthlyVisitorCount.count}
+          sideLable={monthlyVisitorCount.monthName}
+        />
+      </Section>
+
+      <Section>
         <Link href={"/portfolio"}>
           <DataCard
             label={"Total Portfolio's"}
             value={totalPortfolios}
             // percentageValue={3.45}
-            inverse={false}
+            inverse={true}
           />
         </Link>
       </Section>
 
-      <Section className={styles["graphCard"]}>
+      <SectionLarge>
+        <div className={styles["graphCard_Collection"]}>
+          <div className={styles["firstCard"]}>
+            <Card
+              heading="Doughnut Chart Example"
+              subHeading="Lets see how data is ploting on chartjs"
+              topRight= "false"
+              footerRight= "false"
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <DoughnutChartExample />
+              </div>
+            </Card>
+          </div>
+
+          <div className={styles["secondCard"]}>
+            <Card
+              heading="Radar Chart Example"
+              subHeading="Lets see how data is ploting on chartjs"
+              topRight= "false"
+              footerRight= "false"
+            >
+              <RadarChart />
+            </Card>
+          </div>
+          <div className={styles["thirdCard"]}>
+            <Card
+                heading="Bar Chart Example"
+                subHeading="Lets see how data is ploting on chartjs"
+                topRight= "false"
+                footerRight= "false"
+              >
+                <BarChartExample 
+                  data={Last7DaysVisitors}
+                />
+              </Card>
+          </div>
+        </div>
+      </SectionLarge>
+
+      <SectionLarge className={styles["graphCard"]}>
         <div>
           <Card
-            heading="Bar Chart Example"
+            heading="Line Chart Example"
             subHeading="Lets see how data is ploting on chartjs"
             topRight= "false"
             footerRight= "false"
           >
-            <BarChartExample />
-          </Card>
-          <Card
-            heading="Doughnut Chart Example"
-            subHeading="Lets see how data is ploting on chartjs"
-            topRight= "false"
-            footerRight= "false"
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <DoughnutChartExample />
-            </div>
+            <LineChart 
+              data={Last12MonthsVisitors}
+            />
           </Card>
         </div>
-      </Section>
-
-      {/* <Section>
-        <Card
-          heading="Basic Plan"
-          subHeading="Our most popular plan for small teams."
-          rightItem={() => {
-            return <h2>$20 per month</h2>;
-          }}
-          footerLeft={() => {
-            return (
-              <div className={styles["date-placeholder"]}>
-                <SlCalender />
-                <p className="ml-5">5th Sep 2023</p>
-              </div>
-            );
-          }}
-          footerRight={() => {
-            return (
-              <ActionButton
-                inverse={true}
-                label="View"
-                style={{ padding: "2px 5px", fontSize: 12 }}
-              />
-            );
-          }}
-        >
-          <div style={{ margin: "10px" }}>
-            <Paragraph />
-            <Paragraph />
-          </div>
-        </Card>
-
-        <Card heading="Payment method" subHeading="Change how you pay for plan">
-          <div style={{ margin: "10px" }}>
-            <Paragraph />
-          </div>
-        </Card>
-
-        <Card
-          heading="Basic Plan"
-          subHeading="Our most popular plan for small teams."
-          rightItem={() => {
-            return <h2>$20 per month</h2>;
-          }}
-        >
-          <div style={{ margin: "10px" }}>
-            <Paragraph />
-          </div>
-        </Card>
-      </Section> */}
-
-      {/* <BillingHistory /> */}
-
-      <Modal
-        isOpen={modal}
-        onClose={handleClose}
-        heading={"Create New Portfolio"}
-        positiveText={"Save Changes"}
-        // negativeText={"Cancel"}
-        onCancel={handleCancel}
-        onSubmit={handleSubmit}
-    >
-                    <div>
-      <Input
-        inputContainerStyle={{ padding: "15px 30px" }}
-        type="text"
-        placeholder="Title"
-        onChange={(e) => console.log(e)}
-        name="title"
-        label={"Title of the portfolio"}
-      />
-      <Input
-        inputContainerStyle={{ padding: "15px 30px" }}
-        type="password"
-        placeholder="Description"
-        onChange={(e) => console.log(e)}
-        name="desc"
-        label={"Description"}
-      />
-
-        {/* {portfolioTags.map((tag, index) => (
-          <Input
-          inputContainerStyle={{ }}
-          type="checkbox"
-          placeholder=""
-          onChange={(e) => console.log(e)}
-          name="tag"
-          label={tag.text}
-        />
-        ))} */}
-      </div>
-    </Modal>
+      </SectionLarge>
     </>
   );
 }

@@ -5,6 +5,7 @@ const DataCard = ({
   label = null,
   value = null,
   percentageValue = null,
+  sideLable = null,
   Icon = null,
   inverse = null,
 }) => {
@@ -25,6 +26,11 @@ const DataCard = ({
             {percentageValue > 0
               ? `+${percentageValue}%`
               : `-${percentageValue}%`}
+          </p>
+        )}
+        {sideLable && (
+          <p className={styles["data-percentage"]}>
+            {sideLable}
           </p>
         )}
       </div>

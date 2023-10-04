@@ -1,7 +1,35 @@
 .graphCard{
   display: flex;
   gap: 10px;
+  width: 100%;
 }
+.graphCard_Collection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+/* Style the first card to cover 50% of the screen width */
+.firstCard {
+  flex-basis: 24%;
+  height: 100%;
+}
+.secondCard {
+  flex-basis: 24%;
+}
+
+.thirdCard {
+  flex-basis: 50%;
+}
+
+
+/* Style the last two cards to share the remaining 50% equally */
+.graphCard_Collection .Card:nth-child(n+2) {
+  flex-basis: calc(50% - 10px); /* Adjust the width as needed */
+}
+
 .content{
   width: calc(100% - 300px);
   position: relative;
