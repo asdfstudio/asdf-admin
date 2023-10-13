@@ -2,7 +2,7 @@ import Login from 'pages/login';
 import { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
-import { getBlogs, getPortfolios, getUsers, isUserLoggedIn, visitor } from 'src/actions';
+import { getBlogs, getPortfolioVisitors, getPortfolios, getUsers, isUserLoggedIn, visitor } from 'src/actions';
 
 export default function PrivateContent({ children }) {
 
@@ -18,6 +18,7 @@ export default function PrivateContent({ children }) {
       dispatch(getBlogs());
       dispatch(getUsers());
       dispatch(visitor());
+      dispatch(getPortfolioVisitors());
     }
   }, [PrivateAuth.authenticate, dispatch]);
 

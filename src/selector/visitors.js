@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-export const getVisitorData = (state) => state.auth.visitor;
+export const getVisitorData = (state) => state.visitor.visitor;
 
 export const getTodayVisitorCount = createSelector(
     [getVisitorData],

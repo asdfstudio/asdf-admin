@@ -150,22 +150,3 @@ export const logout = () => {
         }
     }
 }
-
-export const visitor = () => {
-    return async dispatch => {
-        dispatch({ type: authConstants.VISITOR_REQUEST });
-        const res = await axios.get(`${baseURL}/visitor-count`);
-        const visitor = res.data;
-        if(res.status === 200){
-            dispatch({ type: authConstants.VISITOR_SUCCESS,
-                payload: {
-                    visitor
-                }
-            });
-        }else{
-            dispatch({
-                type: authConstants.VISITOR_FAILURE
-            });
-        }
-    }
-}

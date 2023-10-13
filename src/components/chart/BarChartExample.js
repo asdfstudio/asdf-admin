@@ -24,7 +24,7 @@ const BarChartExample = ({
         labels: data.map((row) => row.year),
         datasets: [
           {
-            label: "Acquisitions by year",
+            label: "Acquisitions by day",
             data: data.map((row) => row.count),
           },
         ],

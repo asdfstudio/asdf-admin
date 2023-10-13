@@ -1,17 +1,20 @@
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const DoughnutChartExample = (props) => {
+const DoughnutChartExample = ({
+  top3PortfolioNames,
+  top3PortfolioCounts
+}) => {
   const chartRef = useRef();
   const chartObjRef = useRef();
 
   const createDoughnutChart = (el) => {
     const data = {
-      labels: ["Portfolio 1", "Portfolio 2", "Portfolio 3"],
+      labels: top3PortfolioNames,
       datasets: [
         {
           label: "My First Dataset",
-          data: [300, 50, 100],
+          data: top3PortfolioCounts,
           backgroundColor: [
             "rgb(255, 99, 132)",
             "rgb(54, 162, 235)",
@@ -35,7 +38,7 @@ const DoughnutChartExample = (props) => {
     createDoughnutChart(el);
 
     return () => chartObjRef.current.destroy();
-  }, []);
+  }, [top3PortfolioNames]);
 
   return (
       <canvas ref={chartRef}></canvas>

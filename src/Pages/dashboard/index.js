@@ -15,6 +15,8 @@ import {
   getLast7DaysVisitors, 
   getMonthlyVisitorCount, 
   getTodayVisitorCount, 
+  getTop3Portfolios,
+  getTop3PortfoliosByVisitorCount, 
   getWeeklyVisitorCount 
 } from "src/selector";
 import RadarChart from "src/components/chart/RadarChart";
@@ -23,7 +25,12 @@ import SectionLarge from "@aio/components/SectionLarge";
 
 export default function Dashboard() {
   const auth = useSelector(state => state.auth);
-  const visitor = useSelector(state => state.auth.visitor);
+  const visitor = useSelector(state => state.visitor.visitor);
+  const [
+    top3PortfolioNames, 
+    top3PortfolioCounts
+  ] = useSelector(getTop3Portfolios);
+  const raderData = useSelector(getTop3PortfoliosByVisitorCount);
   const portfolios = useSelector(state => state.portfolio);
 
   const totalPortfolios = portfolios.portfolios.length;
@@ -81,8 +88,8 @@ export default function Dashboard() {
         <div className={styles["graphCard_Collection"]}>
           <div className={styles["firstCard"]}>
             <Card
-              heading="Doughnut Chart Example"
-              subHeading="Lets see how data is ploting on chartjs"
+              heading="Top 3 portfolio visit"
+              subHeading="Visitor count of top 3 portfolios of all time"
               topRight= "false"
               footerRight= "false"
             >
@@ -92,24 +99,27 @@ export default function Dashboard() {
                   justifyContent: "center",
                 }}
               >
-                <DoughnutChartExample />
+                <DoughnutChartExample 
+                  top3PortfolioNames={ top3PortfolioNames } 
+                  top3PortfolioCounts={ top3PortfolioCounts }
+                />
               </div>
             </Card>
           </div>
 
           <div className={styles["secondCard"]}>
             <Card
-              heading="Radar Chart Example"
-              subHeading="Lets see how data is ploting on chartjs"
+              heading="Portfolio time spent"
+              subHeading="Shows how many minutes client have spend on portfolio "
               topRight= "false"
               footerRight= "false"
             >
-              <RadarChart />
+              <RadarChart raderData = {raderData}/>
             </Card>
           </div>
           <div className={styles["thirdCard"]}>
             <Card
-                heading="Bar Chart Example"
+                heading="Site visitors of this week"
                 subHeading="Lets see how data is ploting on chartjs"
                 topRight= "false"
                 footerRight= "false"
@@ -125,7 +135,7 @@ export default function Dashboard() {
       <SectionLarge className={styles["graphCard"]}>
         <div>
           <Card
-            heading="Line Chart Example"
+            heading="Site visitors of this year"
             subHeading="Lets see how data is ploting on chartjs"
             topRight= "false"
             footerRight= "false"
