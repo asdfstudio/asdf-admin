@@ -13,7 +13,7 @@ const DoughnutChartExample = ({
       labels: top3PortfolioNames,
       datasets: [
         {
-          label: "My First Dataset",
+          label: "Total view",
           data: top3PortfolioCounts,
           backgroundColor: [
             "rgb(255, 99, 132)",
