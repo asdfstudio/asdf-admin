@@ -53,7 +53,7 @@ export default function Dashboard() {
       <Section>
         <DataCard
           label={"Total Visitor's"}
-          value={visitor[0]?.count}
+          value={visitor.length}
           inverse={true}
         />
         <DataCard
