@@ -15,6 +15,7 @@ import CoverImageUpload from "../CoverImageUpload";
 import Select from 'react-select';
 import Input from "../Input";
 import { tags } from "src/components/tags";
+import { BsClock, BsEye } from "react-icons/bs";
 
 const baseImageURL = BASE_IMAGE_URL;
 
@@ -175,21 +176,39 @@ const Card = ({
     return (
         <>
             <div className={styles["card"]}>
+                <div className="card-right">
+                    <div className={styles["card-right-collection"]}>
+                        <div>
+                            {
+                                topRight == "true" &&
+                                <ActionButton
+                                    inverse={true}
+                                    label="View"
+                                    style={{ padding: "4px 10px", fontSize: 14 }}
+                                    onClick={openViewModal}
+                                /> 
+                            }
+                        </div>
+                        <div className={styles["viewsContainer"]}>
+                            <div className={styles["ViewsCounterAlign"]}>
+                                <BsEye />
+                                <p className="ml-5" style={{fontWeight: '500'}}>
+                                    Views: {data?.totalVisitor}
+                                </p>
+                            </div>
+                            <div className={styles["ViewsCounterAlign"]}>
+                                <BsClock />
+                                <p className="ml-5" style={{fontWeight: '500'}}>
+                                    Time spend: {data?.totalSpentTime}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className={styles["card-header"]}>
                     <div className={styles["card-left"]}>
                         <h2 className="s-16">{heading}</h2>
                         <p className="s-12 tc-grey">{subHeading}</p>
-                    </div>
-                    <div className="card-right">
-                        {
-                            topRight == "true" &&
-                            <ActionButton
-                                inverse={true}
-                                label="View"
-                                style={{ padding: "4px 10px", fontSize: 14 }}
-                                onClick={openViewModal}
-                            /> 
-                        }
                     </div>
                 </div>
                 <div className={styles["card-body"]}>
