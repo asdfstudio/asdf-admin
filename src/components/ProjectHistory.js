@@ -85,6 +85,7 @@ const ProjectHistory  = ({
                         </div>
                       );
                     }}
+                    showView= {true}
                   >
                     <div style={{ margin: "10px", display:"flex", flexDirection:"column", gap:"20px" }}>
                       <p className={styles["descContainer"]}>{data.desc}</p>

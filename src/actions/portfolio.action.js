@@ -218,3 +218,11 @@ export const deletePortfolioById = (portfolioId) => {
     }
   };
 };
+
+export const sortByViews = () => ({
+  type: 'SORT_BY_VIEWS',
+});
+
+export const sortByTimeSpent = () => ({
+  type: 'SORT_BY_TIME_SPENT',
+});

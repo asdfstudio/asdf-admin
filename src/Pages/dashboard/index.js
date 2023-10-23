@@ -12,7 +12,9 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import { 
   getLast12MonthsVisitors, 
+  getLast30DaysVisitors, 
   getLast7DaysVisitors, 
+  getLastCustomDaysVisitors, 
   getMonthlyVisitorCount, 
   getTodayVisitorCount, 
   getTop3Portfolios,
@@ -22,6 +24,10 @@ import {
 import RadarChart from "src/components/chart/RadarChart";
 import LineChart from "src/components/chart/LineChart";
 import SectionLarge from "@aio/components/SectionLarge";
+import StackedBarLineChart from "src/components/chart/StackedBarLineChart";
+import VisitorFilter from "src/components/chart/Component/VisitorFilter";
+import { useState } from "react";
+import StackedBarChart from "src/components/chart/StackedBarChart ";
 
 export default function Dashboard() {
   const auth = useSelector(state => state.auth);
@@ -41,7 +47,18 @@ export default function Dashboard() {
   const weeklyVisitorCount = useSelector(getWeeklyVisitorCount);
   const monthlyVisitorCount = useSelector(getMonthlyVisitorCount);
   const Last7DaysVisitors = useSelector(getLast7DaysVisitors);
+  const Last30DaysVisitors = useSelector( getLast30DaysVisitors);
   const Last12MonthsVisitors = useSelector(getLast12MonthsVisitors);
+
+  
+  // Custom visitors
+  const [selectedDays, setSelectedDays] = useState(30);
+
+  const handleFilterChange = (days) => {
+    setSelectedDays(days);
+  };
+
+  const LastCustomsDaysVisitors = useSelector( getLastCustomDaysVisitors(selectedDays));
   
   return (
     <>
@@ -64,7 +81,7 @@ export default function Dashboard() {
         <DataCard
           label={"Weekly Visitor"}
           value={weeklyVisitorCount.count}
-          sideLable={`Week: ` + weeklyVisitorCount.weekNumber}
+          sideLable={weeklyVisitorCount.weekNumber + `Week` }
         />
         <DataCard
           label={"Monthly Visitor"}
@@ -129,6 +146,24 @@ export default function Dashboard() {
                 />
               </Card>
           </div>
+        </div>
+      </SectionLarge>
+
+      <SectionLarge className={styles["graphCard"]}>
+        <div>
+          <Card
+            heading="Site visitors of last 30 days"
+            subHeading="Lets see how data is ploting on chartjs"
+            topRight= "false"
+            footerRight= "false"
+          >
+            <div className={styles["customVisitorSelector"]}>
+              <VisitorFilter onFilterChange={handleFilterChange} />
+            </div>
+            <StackedBarLineChart 
+              data={LastCustomsDaysVisitors}
+            />
+          </Card>
         </div>
       </SectionLarge>
 

@@ -2,6 +2,7 @@ import { productConstants } from "../actions/constants";
 
 const initialState = {
     portfolios: [],
+    sortBy: '',
     loading: false,
 };
 
@@ -100,6 +101,25 @@ export default (state = initialState, action) => {
                 loading: false
             }
             break;
+        case 'SORT_BY_VIEWS':
+            state = {
+                ...state,
+                portfolios: state.portfolios.slice().sort((a, b) => b.totalVisitor - a.totalVisitor),
+                sortBy: 'views',
+            };
+            break;
+        case 'SORT_BY_TIME_SPENT':
+            state =  {
+                ...state,
+                portfolios: state.portfolios.slice().sort((a, b) => {
+                    const parseTime = (str) => {
+                        const [minutes, seconds] = str.split(' ');
+                        return parseInt(minutes) * 60 + parseInt(seconds);
+                    };
+                    return parseTime(b.totalSpentTime) - parseTime(a.totalSpentTime);
+                }),
+                sortBy: 'time_spent',
+            };
     }
 
     return state;

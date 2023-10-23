@@ -25,6 +25,7 @@ const Card = ({
     rightItem = () => {},
     children,
     topRight= "true",
+    showView = false,
     footerLeft = null,
     footerRight = "true",
     width=null,
@@ -189,7 +190,9 @@ const Card = ({
                                 /> 
                             }
                         </div>
-                        <div className={styles["viewsContainer"]}>
+                        {
+                            showView && 
+                            <div className={styles["viewsContainer"]}>
                             <div className={styles["ViewsCounterAlign"]}>
                                 <BsEye />
                                 <p className="ml-5" style={{fontWeight: '500'}}>
@@ -202,7 +205,8 @@ const Card = ({
                                     Time spend: {data?.totalSpentTime}
                                 </p>
                             </div>
-                        </div>
+                        </div>  
+                        }
                     </div>
                 </div>
                 <div className={styles["card-header"]}>

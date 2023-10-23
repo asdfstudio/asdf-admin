@@ -14,6 +14,7 @@ import { addPortfolio, addPortfolioTags, getPortfolios } from 'src/actions';
 import Spinner from '@aio/components/Spinner';
 import PopupAlert from '@aio/components/PopupAlert';
 import CoverImageUpload from '@aio/components/CoverImageUpload';
+import SortingDropdown from 'src/components/SortingDropdown';
 
 
 const Portfolio = () => {
@@ -34,8 +35,11 @@ const Portfolio = () => {
 
     const profileError = useSelector(state => state.portfolio?.error);
 
+    const [localPortfolios, setLocalPortfolios] = useState(portfolios.portfolios);
+
     useEffect(() => {
-      getPortfolios();
+      // getPortfolios();
+      setLocalPortfolios(portfolios.portfolios);
     }, [portfolios, dispatch]);
 
     const handleClose = () => {
@@ -145,9 +149,9 @@ const Portfolio = () => {
               />
             )}
         />
+        {/* <SortingDropdown /> */}
         <ProjectHistory
-          // data={table_data_api} 
-          data={portfolios.portfolios} 
+          data={localPortfolios} 
         />
 
         {

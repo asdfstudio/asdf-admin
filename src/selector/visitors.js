@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { getISOWeek } from 'date-fns';
 
 export const getVisitorData = (state) => state.visitor.visitor;
 
@@ -22,30 +23,40 @@ export const getTodayVisitorCount = createSelector(
     }
   );
 
+
+  function getOrdinalNumber(number) {
+    const suffixes = ["st", "nd", "rd"];
+    const remainder = number % 10;
+    return number + (suffixes[remainder - 1] || "th");
+  }
+  
   export const getWeeklyVisitorCount = createSelector(
     [getVisitorData],
     (visitorData) => {
       const currentDate = new Date();
-      const startOfWeek = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate() - currentDate.getDay()
+      const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  
+      // Calculate the week number within the current month.
+      const weekNumber = Math.ceil(
+        (currentDate.getDate() - startOfMonth.getDate() + 1) / 7
       );
   
-      const weekNumber = Math.ceil(
-        (currentDate.getDate() - startOfWeek.getDate() + 1) / 7
-      );
+      const weekNumberWithSuffix = getOrdinalNumber(weekNumber);
   
       return {
-        weekNumber,
+        weekNumber: weekNumberWithSuffix,
         count: visitorData.filter((visitor) => {
           const visitorDate = new Date(visitor.timestamp);
-          return visitorDate >= startOfWeek;
+          return (
+            visitorDate >= startOfMonth && visitorDate.getMonth() === currentDate.getMonth()
+          );
         }).length,
       };
     }
   );
   
+  
+
 export const getMonthlyVisitorCount = createSelector(
   [getVisitorData],
   (visitorData) => {
@@ -65,31 +76,89 @@ export const getMonthlyVisitorCount = createSelector(
   }
 );
 
-export const getLast7DaysVisitors = createSelector(
-  [getVisitorData],
-  (visitorData) => {
-    const currentDate = new Date();
-    const last7Days = [];
-    
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(currentDate);
-      date.setDate(date.getDate() - i);
-      const year = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
-      const count = visitorData.filter((visitor) => {
-        const visitorDate = new Date(visitor.timestamp);
-        return (
-          visitorDate.getDate() === date.getDate() &&
-          visitorDate.getMonth() === date.getMonth() &&
-          visitorDate.getFullYear() === date.getFullYear()
-        );
-      }).length;
+  export const getLast7DaysVisitors = createSelector(
+    [getVisitorData],
+    (visitorData) => {
+      const currentDate = new Date();
+      const last7Days = [];
+      
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(currentDate);
+        date.setDate(date.getDate() - i);
+        const year = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+        const count = visitorData.filter((visitor) => {
+          const visitorDate = new Date(visitor.timestamp);
+          return (
+            visitorDate.getDate() === date.getDate() &&
+            visitorDate.getMonth() === date.getMonth() &&
+            visitorDate.getFullYear() === date.getFullYear()
+          );
+        }).length;
 
-      last7Days.unshift({ year, count });
+        last7Days.unshift({ year, count });
+      }
+
+      return last7Days;
     }
+  );
 
-    return last7Days;
-  }
-);
+  export const getLast30DaysVisitors = createSelector(
+    [getVisitorData],
+    (visitorData) => {
+      const currentDate = new Date();
+      const last30Days = [];
+      
+      for (let i = 0; i < 30; i++) {
+        const date = new Date(currentDate);
+        date.setDate(date.getDate() - i);
+        const day = date.getDate();
+        const month = date.getMonth() === currentDate.getMonth() ? currentDate.toLocaleString('en-US', { month: 'short' }) : date.toLocaleString('en-US', { month: 'short' });
+        const label = `${month} ${day}`;
+        const count = visitorData.filter((visitor) => {
+          const visitorDate = new Date(visitor.timestamp);
+          return (
+            visitorDate.getDate() === date.getDate() &&
+            visitorDate.getMonth() === date.getMonth() &&
+            visitorDate.getFullYear() === date.getFullYear()
+          );
+        }).length;
+  
+        last30Days.unshift({ month: label, count, anotherCount: count });
+      }
+  
+      return last30Days;
+    }
+  );
+
+  export const getLastCustomDaysVisitors = (selectedDays) => createSelector(
+    [getVisitorData],
+    (visitorData) => {
+      const currentDate = new Date();
+      const last30Days = [];
+      
+      for (let i = 0; i < selectedDays; i++) {
+        const date = new Date(currentDate);
+        date.setDate(date.getDate() - i);
+        const day = date.getDate();
+        const month = date.getMonth() === currentDate.getMonth() ? currentDate.toLocaleString('en-US', { month: 'short' }) : date.toLocaleString('en-US', { month: 'short' });
+        const label = `${month} ${day}`;
+        const count = visitorData.filter((visitor) => {
+          const visitorDate = new Date(visitor.timestamp);
+          return (
+            visitorDate.getDate() === date.getDate() &&
+            visitorDate.getMonth() === date.getMonth() &&
+            visitorDate.getFullYear() === date.getFullYear()
+          );
+        }).length;
+  
+        last30Days.unshift({ month: label, count, anotherCount: count });
+      }
+  
+      return last30Days;
+    }
+  );
+  
+  
 
 export const getLast12MonthsVisitors = createSelector(
   [getVisitorData],
