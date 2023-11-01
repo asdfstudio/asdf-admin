@@ -38,7 +38,7 @@ const Portfolio = () => {
     const [localPortfolios, setLocalPortfolios] = useState(portfolios.portfolios);
 
     useEffect(() => {
-      // getPortfolios();
+      getPortfolios();
       setLocalPortfolios(portfolios.portfolios);
     }, [portfolios, dispatch]);
 
@@ -139,13 +139,13 @@ const Portfolio = () => {
         portfolios.loading ? <Spinner /> : 
         <>
         <HeaderSection
-            heading={"Portolio"}
+            heading={"Portfolio"}
             subHeading={"App new portfolio"}
             rightItem={() => (
               <ActionButton
                   onClick={() => setModal(true)}
                   Icon={AiOutlinePlusCircle}
-                  label="Portfilio"
+                  label="Portfolio"
               />
             )}
         />

@@ -1,0 +1,70 @@
+/* Default table styles */
+.table-container {
+  overflow-x: auto;
+  border-radius: 10px;
+}
+
+.portfolioTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: 16px;
+  background: #fff;
+}
+
+.portfolioTable th {
+  background: #333;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.portfolioTable_th_Container {
+  display: flex;
+  align-items: center;
+}
+
+.portfolioTable th,
+.portfolioTable td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.portfolioTable tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.portfolioTable th:first-child,
+.portfolioTable td:first-child {
+  border-left: 1px solid #ddd;
+}
+
+.portfolioTable th:last-child,
+.portfolioTable td:last-child {
+  border-right: 1px solid #ddd;
+}
+
+/* Style the image */
+.portfolioTable img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 600px) {
+  .portfolioTable {
+    font-size: 14px;
+  }
+  
+  .portfolioTable th,
+  .portfolioTable td {
+    padding: 8px;
+  }
+  
+  .portfolioTable img {
+    width: 40px;
+    height: 40px;
+  }
+}

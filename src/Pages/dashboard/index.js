@@ -28,6 +28,7 @@ import StackedBarLineChart from "src/components/chart/StackedBarLineChart";
 import VisitorFilter from "src/components/chart/Component/VisitorFilter";
 import { useState } from "react";
 import StackedBarChart from "src/components/chart/StackedBarChart ";
+import PortfolioTable from "@aio/components/PortfolioTable";
 
 export default function Dashboard() {
   const auth = useSelector(state => state.auth);
@@ -149,10 +150,14 @@ export default function Dashboard() {
         </div>
       </SectionLarge>
 
+      <SectionLarge className="App">
+        <PortfolioTable portfolios={portfolios.portfolios} />
+      </SectionLarge>
+
       <SectionLarge className={styles["graphCard"]}>
         <div>
           <Card
-            heading="Site visitors of last 30 days"
+            heading="Site visitors of last days"
             subHeading="Lets see how data is ploting on chartjs"
             topRight= "false"
             footerRight= "false"
