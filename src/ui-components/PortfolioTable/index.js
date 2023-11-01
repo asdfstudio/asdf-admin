@@ -116,7 +116,7 @@ const PortfolioTable = ({ portfolios }) => {
             <tr key={index}>
               <td className={styles["portfolioTable_td"]}>
                 <Image
-                  src={`${baseImageURL}/${portfolio.coverImage}`}
+                  src={`${baseImageURL}${portfolio.coverImage}`}
                   // src="/cover01.png"
                   alt={portfolio.name}
                   width={60}
