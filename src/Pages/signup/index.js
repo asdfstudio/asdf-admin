@@ -58,7 +58,7 @@ const Signup = () => {
         <section className={styles["login-container"]}>
           <div className={styles["brand-container"]}>
             <Logo />
-            <div className={styles['logo-explain']}>Airly Studio Dashboard</div>
+            <div className={styles['logo-explain']}>ASDF Studio Dashboard</div>
           </div>
 
           {/* login form */}

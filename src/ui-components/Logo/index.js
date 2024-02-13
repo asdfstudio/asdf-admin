@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <div>
       <Link href={`/dashboard`}>
-        <Image src={"/airly-logo.svg"} width={"150"} height={"50"} alt="logo" priority/>
+        <Image src={"/asdf-logo.svg"} width={"150"} height={"50"} alt="logo" priority/>
       </Link>
     </div>
   );

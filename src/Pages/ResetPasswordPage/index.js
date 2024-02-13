@@ -66,7 +66,7 @@ const ResetPasswordPage = () => {
         <section className={styles["login-container"]}>
           <div className={styles["brand-container"]}>
             <Logo />
-            <div className={styles['logo-explain']}>Airly Studio Dashboard</div>
+            <div className={styles['logo-explain']}>ASDF Studio Dashboard</div>
           </div>
           <div className={styles["form-container"]}>
             <div className="t-center" style={{ margin: "15px 0" }}>

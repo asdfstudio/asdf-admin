@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Airly Studio Admin</title>
+        <title>ASDF Studio Admin</title>
         <meta name="description" content="The complete solution agency" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

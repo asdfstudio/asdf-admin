@@ -65,7 +65,7 @@ export default function Dashboard() {
     <>
       <HeaderSection
         heading={`${upperRole}'s, Dashboard`}
-        subHeading={`Hello, ${auth.user.name}. Welcome to airlyStudio.`}
+        subHeading={`Hello, ${auth.user.name}. Welcome to [asdf]Studio.`}
       />
 
       <Section>

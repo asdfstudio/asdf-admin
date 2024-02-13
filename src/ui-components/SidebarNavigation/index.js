@@ -20,7 +20,7 @@ const SidebarNavigation = ({
       </button>
       <div className={styles['logo-container']}>
         <Logo />
-        <div className={styles['logo-explain']}>Airly Studio Dashboard</div>
+        <div className={styles['logo-explain']}>ASDF Studio Dashboard</div>
       </div>
       <ul className={styles["sidebar-container"]}>
         {routes.map((page, index) => (
