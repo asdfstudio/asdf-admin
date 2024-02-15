@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ['localhost', 'backend.airlystudio.com']
+    domains: ['localhost', 'backend.asdfstudio.com']
   }
 }
 module.exports = nextConfig
