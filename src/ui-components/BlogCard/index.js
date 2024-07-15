@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import styles from "./card.module.css";
 import Modal from "../Modal";
 import ActionButton from "../ActionButton";
@@ -128,11 +128,11 @@ const BlogCard = ({
         setShowAlert(false);
     };
 
-    const handleFileUpload = (uploadedFiles) => {
+    const handleFileUpload = useCallback((uploadedFiles) => {
         const updatedCoverImage = uploadedFiles.map((file) => file.file);
   
         setcoverImageEdit(...updatedCoverImage);
-      };
+    },[])
     
 
 

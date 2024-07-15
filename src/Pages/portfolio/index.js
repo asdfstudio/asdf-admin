@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Select from 'react-select';
 import ActionButton from "@aio/components/ActionButton";
@@ -59,17 +59,17 @@ const Portfolio = () => {
       setPortfolio_images([]);
     };
 
-    const handleFileUpload = (uploadedFiles) => {
+    const handleFileUpload = useCallback((uploadedFiles) => {
       const updatedCoverImage = uploadedFiles.map((file) => file.file);
 
       setCoverImage(...updatedCoverImage);
-    };
+    }, []);
     
-    const handleFilesUpload = (uploadedFiles) => {
+    const handleFilesUpload = useCallback((uploadedFiles) => {
       const updatedImages = uploadedFiles.map((file) => file.file);
 
       setPortfolio_images(updatedImages);
-    };
+    }, []);
 
     const handleSelectChange = (selectedOption) => {
       setPortfolio_tags(selectedOption);

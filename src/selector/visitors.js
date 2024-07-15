@@ -187,4 +187,32 @@ export const getLast12MonthsVisitors = createSelector(
   }
 );
 
-  
+export const previousYearVisitors = createSelector(
+  [getVisitorData],
+  (visitorData) => {
+    const currentDate = new Date();
+    const previousYearData = {
+      year: currentDate.getFullYear() - 1,
+      count: 0,
+    };
+    const currentYearData = {
+      year: currentDate.getFullYear(),
+      count: 0,
+    };
+
+    const currentYear = currentDate.getFullYear();
+
+    for (let i of visitorData) {
+      const visitorDate = new Date(i.timestamp);
+      const visitorYear = visitorDate.getFullYear();
+
+      if (visitorYear === currentYear-1) {
+        previousYearData.count++;
+      } else if (visitorYear === currentYear) {
+        currentYearData.count++;
+      }
+    }
+
+    return [previousYearData, currentYearData];
+  }
+);

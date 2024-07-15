@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ActionButton from "@aio/components/ActionButton";
 import HeaderSection from "@aio/components/HeaderSection";
@@ -57,11 +57,11 @@ const Blog = () => {
       setCoverImage([]);
     };
 
-    const handleFileUpload = (uploadedFiles) => {
+    const handleFileUpload = useCallback((uploadedFiles) => {
       const updatedCoverImage = uploadedFiles.map((file) => file.file);
 
       setCoverImage(...updatedCoverImage);
-    };
+    }, []);
 
     const handleShowAlert = () => {
       setShowAlert(true);

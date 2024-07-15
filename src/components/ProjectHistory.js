@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@aio/components/Card";
 
 import styles from "../components/style/component.module.css"
@@ -22,6 +22,10 @@ const ProjectHistory  = ({
   const [itemList, setItemList] = useState(data);
   const [sortOccour, setSortOccour] = useState(false);
   const [anyModal, setAnyModal] = useState(false);
+  
+  useEffect(() => {
+    setItemList(data);
+  }, [data]);
 
   function handleDrop(result) {
 

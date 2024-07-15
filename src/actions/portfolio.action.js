@@ -194,10 +194,10 @@ export const upatePortfolioImages = (portfolioId, portfolio_images) => {
 export const deletePortfolioById = (portfolioId) => {
   return async (dispatch) => {
     try {
+      dispatch({ type: productConstants.DELETE_PORTFOLIO_BY_ID_REQUEST });
       const res = await axios.delete(`${baseURL}portfolio/deletePortfolioById`, {
         data: { portfolioId },
       });
-      dispatch({ type: productConstants.DELETE_PORTFOLIO_BY_ID_REQUEST });
       if (res.status === 200) {
         dispatch({ 
           type: productConstants.DELETE_PORTFOLIO_BY_ID_SUCCESS,

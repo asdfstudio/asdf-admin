@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { memo, useRef, useState } from 'react'
 
 import { FilePond, File, registerPlugin } from 'react-filepond'
 
@@ -7,19 +7,22 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 import ActionButton from '../ActionButton'
+import { BASE_IMAGE_URL } from 'urlConfig'
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)  
 
 const ImageUpload = ({
     maxImage = "",
     onUpload,
-    // files
+    images
 }) => {
     const pondRef = useRef(null);
 
     const handleUpdateFiles = (files) => {
         onUpload(files);
     };
+
+    const fullImagePaths = images?.map((image)=>`${BASE_IMAGE_URL}${image.image}`)
 
     const handleSaveChanges = () => {
         const currentOrder = pondRef.current.getFiles();
@@ -32,7 +35,7 @@ const ImageUpload = ({
         <div>
             <FilePond
                 ref={pondRef}
-                // files={files}
+                files={images? fullImagePaths : null}
                 onupdatefiles={handleUpdateFiles}
                 allowReorder={true}
                 allowMultiple={true}
@@ -48,4 +51,4 @@ const ImageUpload = ({
         </div>
     );
 }
-export default ImageUpload;
+export default memo(ImageUpload);

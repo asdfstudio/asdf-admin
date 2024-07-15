@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./card.module.css";
 import Modal from "../Modal";
 import ActionButton from "../ActionButton";
@@ -34,7 +34,6 @@ const Card = ({
 }) => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const [anyModal, setAnyModal] = useState(false);
     const [viewModal, setViewModal] = useState(false);
     const [deleteConfirmModal, setDeleteConfirmModal] = useState(false);
 
@@ -69,14 +68,25 @@ const Card = ({
 
     const ConfrimHeading = "Are you sure you want to delete, ";
 
+    useEffect(()=>{
+        if(data.name){
+            settitleEdit(data.name)
+        }
+        if(data.desc){
+            setdescEdit(data.desc)
+        }
+        if(data?.portfolio_tags){
+            setSelectedOption(initialSelectedTags)
+        }
+    },[data]) 
+
     const handleAnyModalClose = () => {
-        setAnyModal(true);
-        isAnyModalOpen(anyModal);
-      };
-      const handleAnyModalOpen = () => {
-        setAnyModal(false);
-        isAnyModalOpen(anyModal);
-      };
+      isAnyModalOpen(false);
+    };
+
+    const handleAnyModalOpen = () => {
+      isAnyModalOpen(true);
+    };
     const handleCloseViewModal = () => {
       setViewModal(false);
       handleAnyModalClose()
@@ -125,17 +135,30 @@ const Card = ({
         setShowAlert(false);
     };
 
-    const handleFileUpload = (uploadedFiles) => {
-        const updatedCoverImage = uploadedFiles.map((file) => file.file);
-  
-        setcoverImageEdit(...updatedCoverImage);
-      };
+
+    const turnBlobIntoFile = useCallback((blobData)=> {
+        const blobDataFileExtension = blobData.type.split("/")[1];
+        const fileData = new File(
+          [blobData],
+          `${Date.now()}-${blobData.size}.${blobDataFileExtension}`,
+          {
+            type: blobData.type,
+          }
+        );
+        return fileData;
+      },[])
+
+    const handleFileUpload = useCallback((uploadedFiles) => {
+      const updatedCoverImage = uploadedFiles.map((file) => file.file);
+
+      setcoverImageEdit(...updatedCoverImage);
+    }, []);
       
-      const handleFilesUpload = (uploadedFiles) => {
+      const handleFilesUpload = useCallback((uploadedFiles) => {
         const updatedImages = uploadedFiles.map((file) => file.file);
-  
+
         setportfolio_imagesEdit(updatedImages);
-      };
+      }, []);
 
 
     const handleEditPortfolio = (e) => {
@@ -164,13 +187,25 @@ const Card = ({
   
         } else {
           e.preventDefault();
+
+          const portfolioBlobsToFiles = portfolio_imagesEdit.map((portfolioImage)=>{
+            if(portfolioImage instanceof Blob && !(portfolioImage instanceof File)){
+                return turnBlobIntoFile(portfolioImage)
+            }else {
+                return portfolioImage
+            }
+        })
+
+          const coverImageBlobToFile = coverImageEdit instanceof Blob? turnBlobIntoFile(coverImageEdit) : coverImageEdit
+           
+
           const form = new FormData();
           form.append("id", data.id);
           form.append("name", titleEdit);
           form.append("desc", descEdit);
-          form.append('coverImageUpdate', coverImageEdit);
+          form.append('coverImageUpdate', coverImageBlobToFile);
 
-          dispatch(updatePortfolio(form, portfolio_imagesEdit, imagestag.tags)).then(() => handleCloseAfterSubmit());
+          dispatch(updatePortfolio(form, portfolioBlobsToFiles, imagestag.tags)).then(() => handleCloseAfterSubmit());
         }
       };
 
@@ -346,7 +381,7 @@ const Card = ({
                         <CoverImageUpload
                             maxImage="1"
                             onUpload={handleFileUpload}
-                            // file={coverImage}
+                            file={data.coverImage}
                         />
                     </div>
 
@@ -355,7 +390,7 @@ const Card = ({
                         <ImageUpload
                             maxImage="100"
                             onUpload={handleFilesUpload}
-                            // files={portfolio_imagesEdit}
+                            images={data.portfolio_pictures}
                         />
                     </div>
                     {

@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import Chart from "chart.js/auto";
 
-const StackedBarLineChart = ({ data = [] }) => {
+const StackedBarLineChart = ({ data = [] , valuesForXAxis='' ,dataForLineGraph='' }) => {
   const chartRef = useRef();
   const chartObj = useRef();
 
@@ -9,12 +9,12 @@ const StackedBarLineChart = ({ data = [] }) => {
     chartObj.current = new Chart(el, {
       type: "bar",
       data: {
-        labels: data.map((row) => row.month),
+        labels: data.map((row) => row[valuesForXAxis]),
         datasets: [
           {
             label: "Dataset 1 (Line)",
             type: "line",
-            data: data.map((row) => row.anotherCount),
+            data: data.map((row) => row[dataForLineGraph]),
             fill: false,
             borderColor: "rgba(75, 192, 192, 1)",
             borderWidth: 1,

@@ -166,7 +166,7 @@ export default function Dashboard() {
               <VisitorFilter onFilterChange={handleFilterChange} />
             </div>
             <StackedBarLineChart 
-              data={LastCustomsDaysVisitors}
+              data={LastCustomsDaysVisitors} valuesForXAxis="month" dataForLineGraph="anotherCount"
             />
           </Card>
         </div>
